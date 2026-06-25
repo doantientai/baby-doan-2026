@@ -10,8 +10,7 @@ const CONFIG = {
   hints: [
     "Le prénom commence par un A.",
     "Le prénom se termine aussi par un A.",
-    "Il signifie « grâce » — d'origine hébraïque, dérivé de Hannah (חַנָּה), " +
-      "qui veut dire « grâce » ou « faveur ».",
+    "Il signifie « grâce ».",
     "C'est un palindrome : il se lit pareil de gauche à droite et de droite " +
       "à gauche.",
     "Il n'utilise que 2 lettres différentes.",
@@ -234,7 +233,7 @@ function buildPhotoPlaceholder() {
 /* =========================================================================
    Init
    ========================================================================= */
-document.addEventListener("DOMContentLoaded", () => {
+function initGame() {
   // Navigation
   $$(".nav-btn").forEach((b) =>
     b.addEventListener("click", () => showScreen(b.dataset.target))
@@ -260,4 +259,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Reveal stays locked and unrendered until the name is guessed.
 
   showScreen("screen-guess");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if ($("#play-btn")) {
+    // Full guessing game (index.html).
+    initGame();
+  } else if ($("#reveal-photo")) {
+    // Standalone details page (anna.html) — render the reveal immediately.
+    renderReveal();
+  }
 });

@@ -129,8 +129,7 @@ h2 {
 }
 
 /* Forms */
-.guess-form,
-.save-row {
+.guess-form {
   display: flex;
   gap: 0.5rem;
   margin: 1rem 0;
@@ -234,57 +233,14 @@ button:disabled {
   box-shadow: 0 6px 18px rgba(232, 122, 163, 0.4);
 }
 
-.divider {
-  border: none;
-  border-top: 1px solid #f0d3e0;
-  margin: 1.25rem 0 1rem;
-}
-
-.save-confirm {
-  color: var(--good);
-  font-weight: 600;
-  min-height: 1.2rem;
+.screenshot-tip {
+  color: var(--soft);
+  font-size: 0.95rem;
+  margin: 0.25rem 0 1rem;
 }
 
 .hidden {
   display: none;
-}
-
-/* Scoreboard */
-.scoreboard {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-.scoreboard th,
-.scoreboard td {
-  padding: 0.8rem 1rem;
-  text-align: left;
-}
-
-.scoreboard thead {
-  background: var(--pink);
-  color: #fff;
-}
-
-.scoreboard tbody tr:nth-child(even) {
-  background: #fdf2f7;
-}
-
-.scoreboard td:first-child,
-.scoreboard th:first-child {
-  text-align: center;
-  width: 3rem;
-}
-
-.scoreboard .empty {
-  text-align: center;
-  color: var(--soft);
-  padding: 1.5rem;
 }
 
 /* Reveal */

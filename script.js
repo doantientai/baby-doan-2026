@@ -31,9 +31,6 @@ const CONFIG = {
       "une petite symétrie parfaite pour une petite fille parfaitement " +
       "aimée. Bienvenue dans la famille, Anna. On a hâte de te voir grandir.",
   },
-
-  // localStorage key for the scoreboard.
-  storageKey: "baby-doan-scoreboard",
 };
 
 /* =========================================================================
@@ -150,65 +147,14 @@ function checkGuess(e) {
 }
 
 /* =========================================================================
-   Screen 2 — Scoreboard (localStorage)
+   Screen 2 — Reveal
    ========================================================================= */
-function loadScores() {
-  try {
-    return JSON.parse(localStorage.getItem(CONFIG.storageKey)) || [];
-  } catch {
-    return [];
-  }
-}
-
-function saveScores(scores) {
-  localStorage.setItem(CONFIG.storageKey, JSON.stringify(scores));
-}
-
-function renderScoreboard() {
-  const scores = loadScores().sort((a, b) => a.ms - b.ms);
-  const tbody = $("#scoreboard-body");
-  tbody.innerHTML = "";
-  if (scores.length === 0) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td colspan="3" class="empty">Aucun score pour l'instant — sois le premier !</td>`;
-    tbody.appendChild(tr);
-    return;
-  }
-  scores.forEach((s, i) => {
-    const tr = document.createElement("tr");
-    const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1;
-    tr.innerHTML = `<td>${medal}</td><td>${escapeHtml(
-      s.player
-    )}</td><td>${formatTime(s.ms)}</td>`;
-    tbody.appendChild(tr);
-  });
-}
-
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
 
-function handleSaveScore() {
-  const player = $("#player-name").value.trim();
-  if (!player) {
-    $("#player-name").focus();
-    return;
-  }
-  const scores = loadScores();
-  scores.push({ player, ms: elapsedMs, at: Date.now() });
-  saveScores(scores);
-  renderScoreboard();
-  $("#save-confirm").textContent = `Enregistré ! Merci, ${player}.`;
-  $("#player-name").value = "";
-  $("#player-name").disabled = true;
-  $("#save-score-btn").disabled = true;
-}
-
-/* =========================================================================
-   Screen 3 — Reveal
-   ========================================================================= */
 function renderReveal() {
   const r = CONFIG.reveal;
   $("#reveal-name").textContent = r.fullName;
@@ -255,13 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#see-reveal-btn").addEventListener("click", () =>
     showScreen("screen-reveal")
   );
-
-  // Scoreboard
-  $("#save-score-btn").addEventListener("click", handleSaveScore);
-  $("#player-name").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") handleSaveScore();
-  });
-  renderScoreboard();
 
   // Reveal stays locked and unrendered until the name is guessed.
 

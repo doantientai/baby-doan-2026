@@ -77,6 +77,8 @@ function stopTimer() {
 }
 
 function showScreen(id) {
+  // The reveal is locked until the name has been guessed.
+  if (id === "screen-reveal" && !solved) return;
   $$(".screen").forEach((s) => s.classList.remove("active"));
   $(`#${id}`).classList.add("active");
   $$(".nav-btn").forEach((b) =>
@@ -118,6 +120,11 @@ function checkGuess(e) {
     $("#hint-btn").disabled = true;
     $("#save-score").classList.remove("hidden");
     $("#final-time").textContent = formatTime(elapsedMs);
+    // Unlock the reveal now that the name is known.
+    renderReveal();
+    const navReveal = $("#nav-reveal");
+    navReveal.disabled = false;
+    navReveal.textContent = "Révélation";
   } else {
     feedback.textContent = "Pas tout à fait — réessaie, ou révèle un indice.";
     feedback.className = "feedback wrong";
@@ -231,8 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#save-score-btn").addEventListener("click", handleSaveScore);
   renderScoreboard();
 
-  // Reveal
-  renderReveal();
+  // Reveal stays locked and unrendered until the name is guessed.
 
   showScreen("screen-guess");
 });

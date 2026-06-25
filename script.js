@@ -55,11 +55,6 @@ const CONFIG = {
       { label: "Poids", value: "2,995 kg" },
       { label: "Taille", value: "49 cm" },
     ],
-    story:
-      "Après une longue attente, notre petite Anna est arrivée pour remplir " +
-      "notre monde de grâce. Son prénom se lit pareil dans les deux sens — " +
-      "une petite symétrie parfaite pour une petite fille parfaitement " +
-      "aimée. Bienvenue dans la famille, Anna. On a hâte de te voir grandir.",
   },
 };
 
@@ -227,7 +222,6 @@ function renderReveal() {
   } else {
     note.style.display = "none";
   }
-  $("#reveal-story").textContent = r.story;
 }
 
 function buildPhotoPlaceholder() {

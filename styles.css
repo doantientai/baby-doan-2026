@@ -421,12 +421,6 @@ button:disabled {
   line-height: 1.5;
 }
 
-.reveal-story {
-  color: var(--ink);
-  line-height: 1.6;
-  text-align: left;
-  margin-top: 1.25rem;
-}
 
 @media (max-width: 420px) {
   .reveal-facts {

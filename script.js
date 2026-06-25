@@ -17,43 +17,119 @@ const CONFIG = {
     "Il compte 4 lettres au total.",
   ],
 
-  // The big reveal.
+  // The big reveal. Shared bits live at the top; everything language-specific
+  // lives under i18n (fr = the game's reveal; fr/en/vn = the standalone pages).
   reveal: {
     fullName: "Anna Tâm Sophie Xuân Doan",
     photo: "photos/anna-1.jpg",
-    photoAlt: "Bébé Anna",
-    names: [
-      {
-        name: "Anna",
-        meaning:
-          "« grâce » en hébreu (dérivé de Hannah) — et « An » signifie " +
-          "aussi « paix » en vietnamien.",
+    i18n: {
+      fr: {
+        photoAlt: "Bébé Anna",
+        facts: [
+          { label: "Née le", value: "22 juin 2026 à 21h39" },
+          { label: "Lieu", value: "Le Chesnay-Rocquencourt, France" },
+          { label: "Poids", value: "2,995 kg" },
+          { label: "Taille", value: "49 cm" },
+        ],
+        names: [
+          {
+            name: "Anna",
+            meaning:
+              "« grâce » en hébreu (dérivé de Hannah) — et « An » signifie " +
+              "aussi « paix » en vietnamien.",
+          },
+          {
+            name: "Tâm",
+            meaning:
+              "prénom vietnamien (du sino-vietnamien 心) : le cœur, l'âme, " +
+              "le centre intérieur d'une personne.",
+          },
+          {
+            name: "Sophie",
+            meaning: "en hommage à l'une de ses deux grand-mères.",
+          },
+          {
+            name: "Xuân",
+            meaning:
+              "en hommage à son autre grand-mère — « printemps » en " +
+              "vietnamien.",
+          },
+        ],
+        note:
+          "Et un joli clin d'œil : Anna Tâm → An Tâm (安心), « un cœur " +
+          "paisible ». 💛",
       },
-      {
-        name: "Tâm",
-        meaning:
-          "prénom vietnamien (du sino-vietnamien 心) : le cœur, l'âme, " +
-          "le centre intérieur d'une personne.",
+      en: {
+        photoAlt: "Baby Anna",
+        facts: [
+          { label: "Born", value: "June 22, 2026 at 9:39 PM" },
+          { label: "Place", value: "Le Chesnay-Rocquencourt, France" },
+          { label: "Weight", value: "2.995 kg" },
+          { label: "Height", value: "49 cm" },
+        ],
+        names: [
+          {
+            name: "Anna",
+            meaning:
+              '"grace" in Hebrew (from Hannah) — and "An" also means ' +
+              '"peace" in Vietnamese.',
+          },
+          {
+            name: "Tâm",
+            meaning:
+              "a Vietnamese name (from Sino-Vietnamese 心): the heart, the " +
+              "soul, a person's inner core.",
+          },
+          {
+            name: "Sophie",
+            meaning: "in honour of one of her two grandmothers.",
+          },
+          {
+            name: "Xuân",
+            meaning:
+              'in honour of her other grandmother — "spring" in Vietnamese.',
+          },
+        ],
+        note:
+          'A lovely touch: Anna Tâm → An Tâm (安心), "a peaceful heart". 💛',
       },
-      {
-        name: "Sophie",
-        meaning: "en hommage à l'une de ses deux grand-mères.",
+      vn: {
+        photoAlt: "Bé Anna",
+        facts: [
+          { label: "Ngày sinh", value: "22/06/2026 lúc 21:39" },
+          { label: "Nơi sinh", value: "Le Chesnay-Rocquencourt, Pháp" },
+          { label: "Cân nặng", value: "2,995 kg" },
+          { label: "Chiều dài", value: "49 cm" },
+        ],
+        names: [
+          {
+            name: "Anna",
+            meaning:
+              'nghĩa là "ân sủng" trong tiếng Hebrew (từ Hannah) — và "An" ' +
+              'cũng có nghĩa là "bình an" trong tiếng Việt.',
+          },
+          {
+            name: "Tâm",
+            meaning:
+              "tên Việt (Hán-Việt 心): trái tim, tâm hồn, cốt lõi bên trong " +
+              "của một con người.",
+          },
+          {
+            name: "Sophie",
+            meaning: "đặt theo tên một trong hai người bà của bé.",
+          },
+          {
+            name: "Xuân",
+            meaning:
+              'đặt theo người bà còn lại — nghĩa là "mùa xuân" trong tiếng ' +
+              "Việt.",
+          },
+        ],
+        note:
+          'Một điều thú vị: Anna Tâm → An Tâm (安心), "một trái tim bình ' +
+          'an". 💛',
       },
-      {
-        name: "Xuân",
-        meaning:
-          "en hommage à son autre grand-mère — « printemps » en vietnamien.",
-      },
-    ],
-    nameNote:
-      "Et un joli clin d'œil : Anna Tâm → An Tâm (安心), « un cœur " +
-      "paisible ». 💛",
-    facts: [
-      { label: "Née le", value: "22 juin 2026 à 21h39" },
-      { label: "Lieu", value: "Le Chesnay-Rocquencourt, France" },
-      { label: "Poids", value: "2,995 kg" },
-      { label: "Taille", value: "49 cm" },
-    ],
+    },
   },
 };
 
@@ -165,7 +241,7 @@ function checkGuess(e) {
     $("#result-guesses").textContent = guesses;
     $("#result-hints").textContent = `${hintsShown} / ${CONFIG.hints.length}`;
     // Unlock the reveal now that the name is known.
-    renderReveal();
+    renderReveal("fr");
     const navReveal = $("#nav-reveal");
     navReveal.disabled = false;
     navReveal.textContent = "Révélation";
@@ -186,18 +262,19 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function renderReveal() {
+function renderReveal(lang) {
   const r = CONFIG.reveal;
+  const t = r.i18n[lang] || r.i18n.fr;
   $("#reveal-name").textContent = r.fullName;
   const img = $("#reveal-photo");
   img.src = r.photo;
-  img.alt = r.photoAlt;
+  img.alt = t.photoAlt;
   img.onerror = () => {
     img.replaceWith(buildPhotoPlaceholder());
   };
   const facts = $("#reveal-facts");
   facts.innerHTML = "";
-  r.facts.forEach((f) => {
+  t.facts.forEach((f) => {
     const div = document.createElement("div");
     div.className = "fact";
     div.innerHTML = `<span class="fact-label">${escapeHtml(
@@ -207,7 +284,7 @@ function renderReveal() {
   });
   const names = $("#reveal-names");
   names.innerHTML = "";
-  (r.names || []).forEach((n) => {
+  (t.names || []).forEach((n) => {
     const li = document.createElement("li");
     li.innerHTML = `<span class="name-word">${escapeHtml(
       n.name
@@ -215,8 +292,8 @@ function renderReveal() {
     names.appendChild(li);
   });
   const note = $("#reveal-name-note");
-  if (r.nameNote) {
-    note.textContent = r.nameNote;
+  if (t.note) {
+    note.textContent = t.note;
     note.style.display = "";
   } else {
     note.style.display = "none";
@@ -266,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Full guessing game (index.html).
     initGame();
   } else if ($("#reveal-photo")) {
-    // Standalone details page (anna.html) — render the reveal immediately.
-    renderReveal();
+    // Standalone details page — render in the page's language.
+    renderReveal(document.body.dataset.lang || "fr");
   }
 });

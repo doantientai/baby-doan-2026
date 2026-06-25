@@ -33,26 +33,35 @@ const CONFIG = {
         ],
         names: [
           {
+            role: "1er prénom",
             name: "Anna",
             meaning:
               "« grâce » en hébreu (dérivé de Hannah) — et « An » signifie " +
               "aussi « paix » en vietnamien.",
           },
           {
+            role: "2e prénom",
             name: "Tâm",
             meaning:
               "prénom vietnamien (du sino-vietnamien 心) : le cœur, l'âme, " +
               "le centre intérieur d'une personne.",
           },
           {
+            role: "3e prénom",
             name: "Sophie",
             meaning: "en hommage à l'une de ses deux grand-mères.",
           },
           {
+            role: "4e prénom",
             name: "Xuân",
             meaning:
               "en hommage à son autre grand-mère — « printemps » en " +
               "vietnamien.",
+          },
+          {
+            role: "Nom de famille",
+            name: "Doan",
+            meaning: "le nom de famille vietnamien, partagé par toute la famille.",
           },
         ],
         note:
@@ -69,25 +78,34 @@ const CONFIG = {
         ],
         names: [
           {
+            role: "First name",
             name: "Anna",
             meaning:
               '"grace" in Hebrew (from Hannah) — and "An" also means ' +
               '"peace" in Vietnamese.',
           },
           {
+            role: "Second name",
             name: "Tâm",
             meaning:
               "a Vietnamese name (from Sino-Vietnamese 心): the heart, the " +
               "soul, a person's inner core.",
           },
           {
+            role: "Third name",
             name: "Sophie",
             meaning: "in honour of one of her two grandmothers.",
           },
           {
+            role: "Fourth name",
             name: "Xuân",
             meaning:
               'in honour of her other grandmother — "spring" in Vietnamese.',
+          },
+          {
+            role: "Family name",
+            name: "Doan",
+            meaning: "the Vietnamese family name, shared by the whole family.",
           },
         ],
         note:
@@ -103,26 +121,35 @@ const CONFIG = {
         ],
         names: [
           {
+            role: "Tên thứ nhất",
             name: "Anna",
             meaning:
               'nghĩa là "ân sủng" trong tiếng Hebrew (từ Hannah) — và "An" ' +
               'cũng có nghĩa là "bình an" trong tiếng Việt.',
           },
           {
+            role: "Tên thứ hai",
             name: "Tâm",
             meaning:
               "tên Việt (Hán-Việt 心): trái tim, tâm hồn, cốt lõi bên trong " +
               "của một con người.",
           },
           {
+            role: "Tên thứ ba",
             name: "Sophie",
             meaning: "đặt theo tên một trong hai người bà của bé.",
           },
           {
+            role: "Tên thứ tư",
             name: "Xuân",
             meaning:
               'đặt theo người bà còn lại — nghĩa là "mùa xuân" trong tiếng ' +
               "Việt.",
+          },
+          {
+            role: "Họ",
+            name: "Doan",
+            meaning: "họ của người Việt, chung cho cả gia đình.",
           },
         ],
         note:
@@ -286,7 +313,10 @@ function renderReveal(lang) {
   names.innerHTML = "";
   (t.names || []).forEach((n) => {
     const li = document.createElement("li");
-    li.innerHTML = `<span class="name-word">${escapeHtml(
+    const role = n.role
+      ? `<span class="name-role">${escapeHtml(n.role)}</span>`
+      : "";
+    li.innerHTML = `${role}<span class="name-word">${escapeHtml(
       n.name
     )}</span> <span class="name-meaning">${escapeHtml(n.meaning)}</span>`;
     names.appendChild(li);

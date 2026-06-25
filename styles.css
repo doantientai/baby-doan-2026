@@ -284,10 +284,26 @@ button:disabled {
   box-shadow: 0 6px 18px rgba(232, 122, 163, 0.4);
 }
 
+.share-btn {
+  display: block;
+  width: 100%;
+  margin: 1rem 0 0;
+  background: #fff;
+  color: var(--pink-deep);
+  border: 2px solid var(--pink);
+}
+
 .screenshot-tip {
   color: var(--soft);
   font-size: 0.95rem;
   margin: 1rem 0 0;
+}
+
+/* Blur the name once the visitor opts to share their result. */
+#game.shared .spoiler {
+  filter: blur(8px);
+  user-select: none;
+  transition: filter 0.25s ease;
 }
 
 .hidden {

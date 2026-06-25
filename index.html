@@ -45,6 +45,7 @@
             <form id="guess-form" class="guess-form" autocomplete="off">
               <input
                 id="guess-input"
+                class="spoiler"
                 type="text"
                 placeholder="Entre le prénom du bébé…"
                 aria-label="Ta réponse"
@@ -55,7 +56,7 @@
               <button id="guess-submit" type="submit">Deviner</button>
             </form>
 
-            <p id="guess-feedback" class="feedback" role="status"></p>
+            <p id="guess-feedback" class="feedback spoiler" role="status"></p>
 
             <button id="hint-btn" class="hint-btn" type="button">
               💡 Révéler un indice
@@ -77,8 +78,12 @@
                   <span class="stat-label">Indices utilisés</span>
                 </div>
               </div>
-              <p class="screenshot-tip">
-                📸 Fais une capture d'écran et partage-la avec nous !
+              <button id="share-btn" class="share-btn" type="button">
+                📸 Partager le résultat
+              </button>
+              <p id="share-tip" class="screenshot-tip hidden">
+                Prénom masqué 👍 Fais ta capture d'écran et partage-la avec
+                nous !
               </p>
             </div>
 

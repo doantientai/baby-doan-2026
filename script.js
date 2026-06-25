@@ -128,9 +128,12 @@ function checkGuess(e) {
   if (normalize(guess) === normalize(CONFIG.name)) {
     solved = true;
     stopTimer();
-    // Hide the quiz inputs (typed name + feedback) so a screenshot of the
-    // win screen can't reveal the answer.
-    $("#quiz").classList.add("hidden");
+    feedback.textContent = `🎉 Oui ! C'est ${CONFIG.name} !`;
+    feedback.classList.remove("wrong");
+    feedback.classList.add("correct");
+    $("#guess-input").disabled = true;
+    $("#guess-submit").disabled = true;
+    $("#hint-btn").disabled = true;
     $("#result").classList.remove("hidden");
     $("#result-time").textContent = formatTime(elapsedMs);
     $("#result-hints").textContent = `${hintsShown} / ${CONFIG.hints.length}`;
@@ -141,7 +144,8 @@ function checkGuess(e) {
     navReveal.textContent = "Révélation";
   } else {
     feedback.textContent = "Pas tout à fait — réessaie, ou révèle un indice.";
-    feedback.className = "feedback wrong";
+    feedback.classList.remove("correct");
+    feedback.classList.add("wrong");
     $("#guess-input").select();
   }
 }
@@ -197,6 +201,13 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#play-btn").addEventListener("click", startGame);
   $("#hint-btn").addEventListener("click", revealNextHint);
   $("#guess-form").addEventListener("submit", checkGuess);
+
+  // Blur the name so the result can be screenshotted without spoiling it.
+  $("#share-btn").addEventListener("click", () => {
+    $("#game").classList.add("shared");
+    $("#share-btn").classList.add("hidden");
+    $("#share-tip").classList.remove("hidden");
+  });
 
   // Jump straight to the reveal after winning.
   $("#see-reveal-btn").addEventListener("click", () =>

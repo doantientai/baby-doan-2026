@@ -95,8 +95,14 @@ function showScreen(id) {
 /* =========================================================================
    Screen 1 — Guess the name
    ========================================================================= */
-function revealNextHint() {
+function startGame() {
+  $("#play-btn").classList.add("hidden");
+  $("#game").classList.remove("hidden");
   startTimer();
+  $("#guess-input").focus();
+}
+
+function revealNextHint() {
   if (hintsShown >= CONFIG.hints.length) return;
   const list = $("#hints");
   const li = document.createElement("li");
@@ -194,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // Guess screen
+  $("#play-btn").addEventListener("click", startGame);
   $("#hint-btn").addEventListener("click", revealNextHint);
   $("#guess-form").addEventListener("submit", checkGuess);
 

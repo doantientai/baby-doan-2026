@@ -106,6 +106,16 @@ h2 {
   margin-top: -0.3rem;
 }
 
+/* Play button */
+.play-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 1rem 2.5rem;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, var(--pink-deep), var(--pink));
+  box-shadow: 0 8px 22px rgba(232, 122, 163, 0.45);
+}
+
 /* Timer */
 .timer-box {
   display: flex;

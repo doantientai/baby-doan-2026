@@ -40,6 +40,7 @@ let timerStart = null;
 let timerInterval = null;
 let elapsedMs = 0;
 let hintsShown = 0;
+let guesses = 0;
 let solved = false;
 
 /* =========================================================================
@@ -124,6 +125,7 @@ function checkGuess(e) {
   const guess = $("#guess-input").value.trim();
   const feedback = $("#guess-feedback");
   if (!guess) return;
+  guesses += 1;
 
   if (normalize(guess) === normalize(CONFIG.name)) {
     solved = true;
@@ -136,6 +138,7 @@ function checkGuess(e) {
     $("#hint-btn").disabled = true;
     $("#result").classList.remove("hidden");
     $("#result-time").textContent = formatTime(elapsedMs);
+    $("#result-guesses").textContent = guesses;
     $("#result-hints").textContent = `${hintsShown} / ${CONFIG.hints.length}`;
     // Unlock the reveal now that the name is known.
     renderReveal();

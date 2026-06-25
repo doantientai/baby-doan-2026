@@ -61,7 +61,7 @@
             <button id="hint-btn" class="hint-btn" type="button">
               💡 Révéler un indice
             </button>
-            <ul id="hints" class="hints"></ul>
+            <ul id="hints" class="hints spoiler"></ul>
           </div>
 
           <div id="result" class="hidden">
@@ -74,8 +74,12 @@
                   <span class="stat-label">Temps</span>
                 </div>
                 <div class="stat">
+                  <span class="stat-value" id="result-guesses">0</span>
+                  <span class="stat-label">Essais</span>
+                </div>
+                <div class="stat">
                   <span class="stat-value" id="result-hints">0 / 0</span>
-                  <span class="stat-label">Indices utilisés</span>
+                  <span class="stat-label">Indices</span>
                 </div>
               </div>
               <button id="share-btn" class="share-btn" type="button">

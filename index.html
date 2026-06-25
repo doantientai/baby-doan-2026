@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guess the Baby's Name 👶</title>
+    <title>Devine le prénom du bébé 👶</title>
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="icon"
@@ -12,29 +12,29 @@
   </head>
   <body>
     <header>
-      <h1>A New Baby Doan 💕</h1>
+      <h1>Un nouveau bébé Doan 💕</h1>
       <nav>
         <button class="nav-btn active" data-target="screen-guess">
-          Guess the Name
+          Devine le prénom
         </button>
         <button class="nav-btn" data-target="screen-scoreboard">
-          Scoreboard
+          Classement
         </button>
-        <button class="nav-btn" data-target="screen-reveal">Reveal</button>
+        <button class="nav-btn" data-target="screen-reveal">Révélation</button>
       </nav>
     </header>
 
     <main>
       <!-- ============ Screen 1: Guess ============ -->
       <section id="screen-guess" class="screen active">
-        <h2>Can you guess our baby's name?</h2>
+        <h2>Sauras-tu deviner le prénom de notre bébé ?</h2>
         <p class="lead">
-          Type your guess below. Stuck? Reveal a hint — the clock starts on
-          your first hint!
+          Écris ta réponse ci-dessous. Bloqué·e ? Révèle un indice — le
+          chrono démarre au premier indice !
         </p>
 
         <div class="timer-box">
-          <span class="timer-label">Time</span>
+          <span class="timer-label">Temps</span>
           <span id="timer" class="timer">00:00.00</span>
         </div>
 
@@ -42,32 +42,32 @@
           <input
             id="guess-input"
             type="text"
-            placeholder="Enter the baby's name…"
-            aria-label="Your guess"
+            placeholder="Entre le prénom du bébé…"
+            aria-label="Ta réponse"
           />
-          <button id="guess-submit" type="submit">Guess</button>
+          <button id="guess-submit" type="submit">Deviner</button>
         </form>
 
         <p id="guess-feedback" class="feedback" role="status"></p>
 
         <button id="hint-btn" class="hint-btn" type="button">
-          💡 Reveal a hint
+          💡 Révéler un indice
         </button>
         <ul id="hints" class="hints"></ul>
 
         <div id="save-score" class="save-score hidden">
           <p class="solved-time">
-            You got it in <strong id="final-time">00:00.00</strong>!
+            Trouvé en <strong id="final-time">00:00.00</strong> !
           </p>
-          <p>Add your time to the scoreboard:</p>
+          <p>Ajoute ton temps au classement :</p>
           <div class="save-row">
             <input
               id="player-name"
               type="text"
-              placeholder="Your name"
-              aria-label="Your name"
+              placeholder="Ton prénom"
+              aria-label="Ton prénom"
             />
-            <button id="save-score-btn" type="button">Save my time</button>
+            <button id="save-score-btn" type="button">Enregistrer mon temps</button>
           </div>
           <p id="save-confirm" class="save-confirm"></p>
         </div>
@@ -75,14 +75,14 @@
 
       <!-- ============ Screen 2: Scoreboard ============ -->
       <section id="screen-scoreboard" class="screen">
-        <h2>🏆 Scoreboard</h2>
-        <p class="lead">Fastest guessers (saved on this device).</p>
+        <h2>🏆 Classement</h2>
+        <p class="lead">Les plus rapides (enregistré sur cet appareil).</p>
         <table class="scoreboard">
           <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
-              <th>Time</th>
+              <th>Prénom</th>
+              <th>Temps</th>
             </tr>
           </thead>
           <tbody id="scoreboard-body"></tbody>
@@ -91,7 +91,7 @@
 
       <!-- ============ Screen 3: Reveal ============ -->
       <section id="screen-reveal" class="screen">
-        <h2>It's a girl! 🎀</h2>
+        <h2>C'est une fille ! 🎀</h2>
         <div class="reveal-card">
           <img id="reveal-photo" class="reveal-photo" alt="" />
           <h3 id="reveal-name" class="reveal-name"></h3>
@@ -102,7 +102,7 @@
     </main>
 
     <footer>
-      <p>Made with 💕 for Anna</p>
+      <p>Fait avec 💕 pour Anna</p>
     </footer>
 
     <script src="script.js"></script>

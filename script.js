@@ -8,28 +8,28 @@ const CONFIG = {
   // Hints are revealed one at a time. The chronometer starts when the first
   // hint is shown and stops on a correct guess.
   hints: [
-    'It starts and ends with the letter "A".',
-    "It has exactly 4 letters.",
-    "It's a palindrome — same forwards and backwards.",
-    'It means "grace".',
+    'Il commence et se termine par la lettre « A ».',
+    "Il a exactement 4 lettres.",
+    "C'est un palindrome — il se lit pareil dans les deux sens.",
+    'Il signifie « grâce ».',
   ],
 
   // The big reveal.
   reveal: {
     fullName: "Anna Tâm Sophie Xuân Doan",
     photo: "photos/anna-1.jpg",
-    photoAlt: "Baby Anna",
+    photoAlt: "Bébé Anna",
     facts: [
-      { label: "Born", value: "June 22, 2026 at 9:39 PM" },
-      { label: "Place", value: "Le Chesnay-Rocquencourt, France" },
-      { label: "Weight", value: "2.995 kg" },
-      { label: "Height", value: "49 cm" },
+      { label: "Née le", value: "22 juin 2026 à 21h39" },
+      { label: "Lieu", value: "Le Chesnay-Rocquencourt, France" },
+      { label: "Poids", value: "2,995 kg" },
+      { label: "Taille", value: "49 cm" },
     ],
     story:
-      "After a long wait, our little Anna arrived to fill our world with " +
-      "grace. Her name reads the same forwards and backwards — a small, " +
-      "perfect symmetry for a perfectly loved little girl. Welcome to the " +
-      "family, Anna. We can't wait to watch you grow.",
+      "Après une longue attente, notre petite Anna est arrivée pour remplir " +
+      "notre monde de grâce. Son prénom se lit pareil dans les deux sens — " +
+      "une petite symétrie parfaite pour une petite fille parfaitement " +
+      "aimée. Bienvenue dans la famille, Anna. On a hâte de te voir grandir.",
   },
 
   // localStorage key for the scoreboard.
@@ -97,7 +97,7 @@ function revealNextHint() {
   hintsShown += 1;
   if (hintsShown >= CONFIG.hints.length) {
     $("#hint-btn").disabled = true;
-    $("#hint-btn").textContent = "No more hints";
+    $("#hint-btn").textContent = "Plus d'indices";
   }
 }
 
@@ -111,7 +111,7 @@ function checkGuess(e) {
   if (guess.toLowerCase() === CONFIG.name.toLowerCase()) {
     solved = true;
     stopTimer();
-    feedback.textContent = `🎉 Yes! It's ${CONFIG.name}!`;
+    feedback.textContent = `🎉 Oui ! C'est ${CONFIG.name} !`;
     feedback.className = "feedback correct";
     $("#guess-input").disabled = true;
     $("#guess-submit").disabled = true;
@@ -119,7 +119,7 @@ function checkGuess(e) {
     $("#save-score").classList.remove("hidden");
     $("#final-time").textContent = formatTime(elapsedMs);
   } else {
-    feedback.textContent = "Not quite — try again, or reveal a hint.";
+    feedback.textContent = "Pas tout à fait — réessaie, ou révèle un indice.";
     feedback.className = "feedback wrong";
     $("#guess-input").select();
   }
@@ -146,7 +146,7 @@ function renderScoreboard() {
   tbody.innerHTML = "";
   if (scores.length === 0) {
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td colspan="3" class="empty">No scores yet — be the first!</td>`;
+    tr.innerHTML = `<td colspan="3" class="empty">Aucun score pour l'instant — sois le premier !</td>`;
     tbody.appendChild(tr);
     return;
   }
@@ -176,7 +176,7 @@ function handleSaveScore() {
   scores.push({ player, ms: elapsedMs, at: Date.now() });
   saveScores(scores);
   renderScoreboard();
-  $("#save-confirm").textContent = `Saved! Thanks, ${player}.`;
+  $("#save-confirm").textContent = `Enregistré ! Merci, ${player}.`;
   $("#player-name").value = "";
   $("#player-name").disabled = true;
   $("#save-score-btn").disabled = true;
@@ -210,7 +210,7 @@ function renderReveal() {
 function buildPhotoPlaceholder() {
   const div = document.createElement("div");
   div.className = "photo-placeholder";
-  div.innerHTML = `<span>👶</span><small>Add the photo at<br><code>${CONFIG.reveal.photo}</code></small>`;
+  div.innerHTML = `<span>👶</span><small>Ajoute la photo à<br><code>${CONFIG.reveal.photo}</code></small>`;
   return div;
 }
 

@@ -8,10 +8,14 @@ const CONFIG = {
   // Hints are revealed one at a time. The chronometer starts when the first
   // hint is shown and stops on a correct guess.
   hints: [
-    'Il commence et se termine par la lettre « A ».',
-    "Il a exactement 4 lettres.",
-    "C'est un palindrome — il se lit pareil dans les deux sens.",
-    'Il signifie « grâce ».',
+    "Le prénom commence par un A.",
+    "Le prénom se termine aussi par un A.",
+    "Il signifie « grâce » — d'origine hébraïque, dérivé de Hannah (חַנָּה), " +
+      "qui veut dire « grâce » ou « faveur ».",
+    "C'est un palindrome : il se lit pareil de gauche à droite et de droite " +
+      "à gauche.",
+    "Il n'utilise que 2 lettres différentes.",
+    "Il compte 4 lettres au total.",
   ],
 
   // The big reveal.

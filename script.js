@@ -23,6 +23,27 @@ const CONFIG = {
     fullName: "Anna Tâm Sophie Xuân Doan",
     photo: "photos/anna-1.jpg",
     photoAlt: "Bébé Anna",
+    names: [
+      {
+        name: "Anna",
+        meaning: "« grâce » — d'origine hébraïque, dérivé de Hannah.",
+      },
+      {
+        name: "Tâm",
+        meaning:
+          "prénom vietnamien (du sino-vietnamien 心) : le cœur, l'âme, " +
+          "le centre intérieur d'une personne.",
+      },
+      {
+        name: "Sophie",
+        meaning: "en hommage à l'une de ses deux grand-mères.",
+      },
+      {
+        name: "Xuân",
+        meaning:
+          "en hommage à son autre grand-mère — « printemps » en vietnamien.",
+      },
+    ],
     facts: [
       { label: "Née le", value: "22 juin 2026 à 21h39" },
       { label: "Lieu", value: "Le Chesnay-Rocquencourt, France" },
@@ -184,6 +205,15 @@ function renderReveal() {
       f.label
     )}</span><span class="fact-value">${escapeHtml(f.value)}</span>`;
     facts.appendChild(div);
+  });
+  const names = $("#reveal-names");
+  names.innerHTML = "";
+  (r.names || []).forEach((n) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="name-word">${escapeHtml(
+      n.name
+    )}</span> <span class="name-meaning">${escapeHtml(n.meaning)}</span>`;
+    names.appendChild(li);
   });
   $("#reveal-story").textContent = r.story;
 }

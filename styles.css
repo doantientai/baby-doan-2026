@@ -224,6 +224,22 @@ button:disabled {
   font-size: 1.1rem;
 }
 
+.cta-btn {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0 0.25rem;
+  padding: 0.9rem 1.25rem;
+  font-size: 1.15rem;
+  background: linear-gradient(135deg, var(--pink-deep), var(--pink));
+  box-shadow: 0 6px 18px rgba(232, 122, 163, 0.4);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #f0d3e0;
+  margin: 1.25rem 0 1rem;
+}
+
 .save-confirm {
   color: var(--good);
   font-weight: 600;

@@ -51,6 +51,15 @@ let solved = false;
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
+// Lowercase + strip accents so "Anna", "anna", "ánna" all match.
+function normalize(str) {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
 function formatTime(ms) {
   const totalSeconds = Math.floor(ms / 1000);
   const m = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
@@ -97,9 +106,12 @@ function revealNextHint() {
   li.textContent = CONFIG.hints[hintsShown];
   list.appendChild(li);
   hintsShown += 1;
-  if (hintsShown >= CONFIG.hints.length) {
+  const total = CONFIG.hints.length;
+  if (hintsShown >= total) {
     $("#hint-btn").disabled = true;
-    $("#hint-btn").textContent = "Plus d'indices";
+    $("#hint-btn").textContent = `Plus d'indices (${total}/${total})`;
+  } else {
+    $("#hint-btn").textContent = `💡 Indice suivant (${hintsShown}/${total})`;
   }
 }
 
@@ -110,7 +122,7 @@ function checkGuess(e) {
   const feedback = $("#guess-feedback");
   if (!guess) return;
 
-  if (guess.toLowerCase() === CONFIG.name.toLowerCase()) {
+  if (normalize(guess) === normalize(CONFIG.name)) {
     solved = true;
     stopTimer();
     feedback.textContent = `🎉 Oui ! C'est ${CONFIG.name} !`;
@@ -119,7 +131,12 @@ function checkGuess(e) {
     $("#guess-submit").disabled = true;
     $("#hint-btn").disabled = true;
     $("#save-score").classList.remove("hidden");
-    $("#final-time").textContent = formatTime(elapsedMs);
+    // Someone who never used a hint knew it already — celebrate that instead
+    // of a flat 00:00.00.
+    $("#solved-time-msg").innerHTML =
+      elapsedMs > 0
+        ? `Trouvé en <strong>${formatTime(elapsedMs)}</strong> !`
+        : "Tu connaissais déjà ! 💕";
     // Unlock the reveal now that the name is known.
     renderReveal();
     const navReveal = $("#nav-reveal");
@@ -234,8 +251,16 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#hint-btn").addEventListener("click", revealNextHint);
   $("#guess-form").addEventListener("submit", checkGuess);
 
+  // Jump straight to the reveal after winning.
+  $("#see-reveal-btn").addEventListener("click", () =>
+    showScreen("screen-reveal")
+  );
+
   // Scoreboard
   $("#save-score-btn").addEventListener("click", handleSaveScore);
+  $("#player-name").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleSaveScore();
+  });
   renderScoreboard();
 
   // Reveal stays locked and unrendered until the name is guessed.

@@ -46,6 +46,9 @@
             type="text"
             placeholder="Entre le prénom du bébé…"
             aria-label="Ta réponse"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
           />
           <button id="guess-submit" type="submit">Deviner</button>
         </form>
@@ -58,9 +61,11 @@
         <ul id="hints" class="hints"></ul>
 
         <div id="save-score" class="save-score hidden">
-          <p class="solved-time">
-            Trouvé en <strong id="final-time">00:00.00</strong> !
-          </p>
+          <p class="solved-time" id="solved-time-msg"></p>
+          <button id="see-reveal-btn" class="cta-btn" type="button">
+            Voir Anna 🎀
+          </button>
+          <hr class="divider" />
           <p>Ajoute ton temps au classement :</p>
           <div class="save-row">
             <input
@@ -68,6 +73,7 @@
               type="text"
               placeholder="Ton prénom"
               aria-label="Ton prénom"
+              autocapitalize="words"
             />
             <button id="save-score-btn" type="button">Enregistrer mon temps</button>
           </div>

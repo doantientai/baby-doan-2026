@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guess the Baby's Name 👶</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>A New Baby Doan 💕</h1>
+      <nav>
+        <button class="nav-btn active" data-target="screen-guess">
+          Guess the Name
+        </button>
+        <button class="nav-btn" data-target="screen-scoreboard">
+          Scoreboard
+        </button>
+        <button class="nav-btn" data-target="screen-reveal">Reveal</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============ Screen 1: Guess ============ -->
+      <section id="screen-guess" class="screen active">
+        <h2>Can you guess our baby's name?</h2>
+        <p class="lead">
+          Type your guess below. Stuck? Reveal a hint — the clock starts on
+          your first hint!
+        </p>
+
+        <div class="timer-box">
+          <span class="timer-label">Time</span>
+          <span id="timer" class="timer">00:00.00</span>
+        </div>
+
+        <form id="guess-form" class="guess-form" autocomplete="off">
+          <input
+            id="guess-input"
+            type="text"
+            placeholder="Enter the baby's name…"
+            aria-label="Your guess"
+          />
+          <button id="guess-submit" type="submit">Guess</button>
+        </form>
+
+        <p id="guess-feedback" class="feedback" role="status"></p>
+
+        <button id="hint-btn" class="hint-btn" type="button">
+          💡 Reveal a hint
+        </button>
+        <ul id="hints" class="hints"></ul>
+
+        <div id="save-score" class="save-score hidden">
+          <p class="solved-time">
+            You got it in <strong id="final-time">00:00.00</strong>!
+          </p>
+          <p>Add your time to the scoreboard:</p>
+          <div class="save-row">
+            <input
+              id="player-name"
+              type="text"
+              placeholder="Your name"
+              aria-label="Your name"
+            />
+            <button id="save-score-btn" type="button">Save my time</button>
+          </div>
+          <p id="save-confirm" class="save-confirm"></p>
+        </div>
+      </section>
+
+      <!-- ============ Screen 2: Scoreboard ============ -->
+      <section id="screen-scoreboard" class="screen">
+        <h2>🏆 Scoreboard</h2>
+        <p class="lead">Fastest guessers (saved on this device).</p>
+        <table class="scoreboard">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="scoreboard-body"></tbody>
+        </table>
+      </section>
+
+      <!-- ============ Screen 3: Reveal ============ -->
+      <section id="screen-reveal" class="screen">
+        <h2>It's a girl! 🎀</h2>
+        <div class="reveal-card">
+          <img id="reveal-photo" class="reveal-photo" alt="" />
+          <h3 id="reveal-name" class="reveal-name"></h3>
+          <div id="reveal-facts" class="reveal-facts"></div>
+          <p id="reveal-story" class="reveal-story"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made with 💕 for Anna</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

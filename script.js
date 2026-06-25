@@ -128,18 +128,12 @@ function checkGuess(e) {
   if (normalize(guess) === normalize(CONFIG.name)) {
     solved = true;
     stopTimer();
-    feedback.textContent = `🎉 Oui ! C'est ${CONFIG.name} !`;
-    feedback.className = "feedback correct";
-    $("#guess-input").disabled = true;
-    $("#guess-submit").disabled = true;
-    $("#hint-btn").disabled = true;
-    $("#save-score").classList.remove("hidden");
-    // Someone who never used a hint knew it already — celebrate that instead
-    // of a flat 00:00.00.
-    $("#solved-time-msg").innerHTML =
-      elapsedMs > 0
-        ? `Trouvé en <strong>${formatTime(elapsedMs)}</strong> !`
-        : "Tu connaissais déjà ! 💕";
+    // Hide the quiz inputs (typed name + feedback) so a screenshot of the
+    // win screen can't reveal the answer.
+    $("#quiz").classList.add("hidden");
+    $("#result").classList.remove("hidden");
+    $("#result-time").textContent = formatTime(elapsedMs);
+    $("#result-hints").textContent = `${hintsShown} / ${CONFIG.hints.length}`;
     // Unlock the reveal now that the name is known.
     renderReveal();
     const navReveal = $("#nav-reveal");

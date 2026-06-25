@@ -219,9 +219,9 @@ button:disabled {
   color: var(--bad);
 }
 
-/* Save score */
-.save-score {
-  margin-top: 2rem;
+/* Result (win state) */
+.result-card,
+.reveal-cta-card {
   padding: 1.25rem;
   background: #fff;
   border-radius: 16px;
@@ -229,14 +229,55 @@ button:disabled {
   text-align: center;
 }
 
-.solved-time {
-  font-size: 1.1rem;
+.result-card {
+  margin-top: 2rem;
+}
+
+.reveal-cta-card {
+  margin-top: 1rem;
+}
+
+.result-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--pink-deep);
+  margin: 0 0 1rem;
+}
+
+.result-stats {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.stat {
+  flex: 1;
+  background: #fdf2f7;
+  border-radius: 12px;
+  padding: 0.9rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--soft);
 }
 
 .cta-btn {
   display: block;
   width: 100%;
-  margin: 0.5rem 0 0.25rem;
+  margin: 0;
   padding: 0.9rem 1.25rem;
   font-size: 1.15rem;
   background: linear-gradient(135deg, var(--pink-deep), var(--pink));
@@ -246,7 +287,7 @@ button:disabled {
 .screenshot-tip {
   color: var(--soft);
   font-size: 0.95rem;
-  margin: 0.25rem 0 1rem;
+  margin: 1rem 0 0;
 }
 
 .hidden {

@@ -26,7 +26,9 @@ const CONFIG = {
     names: [
       {
         name: "Anna",
-        meaning: "« grâce » — d'origine hébraïque, dérivé de Hannah.",
+        meaning:
+          "« grâce » en hébreu (dérivé de Hannah) — et « An » signifie " +
+          "aussi « paix » en vietnamien.",
       },
       {
         name: "Tâm",
@@ -44,6 +46,9 @@ const CONFIG = {
           "en hommage à son autre grand-mère — « printemps » en vietnamien.",
       },
     ],
+    nameNote:
+      "Et un joli clin d'œil : Anna Tâm → An Tâm (安心), « un cœur " +
+      "paisible ». 💛",
     facts: [
       { label: "Née le", value: "22 juin 2026 à 21h39" },
       { label: "Lieu", value: "Le Chesnay-Rocquencourt, France" },
@@ -215,6 +220,13 @@ function renderReveal() {
     )}</span> <span class="name-meaning">${escapeHtml(n.meaning)}</span>`;
     names.appendChild(li);
   });
+  const note = $("#reveal-name-note");
+  if (r.nameNote) {
+    note.textContent = r.nameNote;
+    note.style.display = "";
+  } else {
+    note.style.display = "none";
+  }
   $("#reveal-story").textContent = r.story;
 }
 

@@ -410,6 +410,17 @@ button:disabled {
   color: var(--ink);
 }
 
+.reveal-name-note {
+  background: linear-gradient(135deg, #fde7f0, #fdeede);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
 .reveal-story {
   color: var(--ink);
   line-height: 1.6;

@@ -329,22 +329,11 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-const NAME_COLORS = ["#b5762e", "#c2693f", "#7d9a6f", "#6f8aa8", "#9b6a9b"];
-
 function renderReveal(lang) {
   const r = CONFIG.reveal;
   const t = r.i18n[lang] || r.i18n.fr;
-  // Full name with each part in its own colour.
-  $("#reveal-name").innerHTML = t.fullName
-    .split(/\s+/)
-    .filter(Boolean)
-    .map(
-      (w, i) =>
-        `<span style="color:${NAME_COLORS[i % NAME_COLORS.length]}">${escapeHtml(
-          w
-        )}</span>`
-    )
-    .join(" ");
+  const nameEl = $("#reveal-name");
+  if (nameEl) nameEl.textContent = t.fullName;
   const img = $("#reveal-photo");
   img.src = r.photo;
   img.alt = t.photoAlt;

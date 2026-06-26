@@ -168,10 +168,12 @@ const CONFIG = {
     url: "https://script.google.com/macros/s/AKfycbyGUgwibX55qUcspTeDK7qLvYsnMNqiQsVJ698Pv523dtjcHgwGBijDgdzYchcptHzq/exec",
     title: "🎁 Liste de naissance",
     intro:
-      "Pour gâter Anna, comme vous préférez : un cadeau fait main, une " +
-      "participation, ou un cadeau de la liste. Cliquez « Je m'en occupe » " +
-      "pour réserver et éviter les doublons. Merci du fond du cœur pour " +
-      "votre générosité ! 💛",
+      "Merci d'être là pour accueillir Anna 💛 Faites comme vous le sentez : " +
+      "un cadeau fait main, une participation, ou un cadeau de la liste. " +
+      "Cliquez « Je m'en occupe » pour réserver et éviter les doublons — " +
+      "certains cadeaux peuvent être partagés à plusieurs, et vous pouvez " +
+      "aussi proposer vos propres idées. On évite simplement les objets trop " +
+      "encombrants ou qui servent peu de temps.",
     loading: "Chargement de la liste…",
     error: "Impossible de charger la liste pour le moment.",
     empty: "La liste arrive bientôt 💛",

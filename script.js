@@ -131,14 +131,14 @@ const CONFIG = {
           {
             name: "Anna",
             meaning:
-              'nghĩa là "ân sủng" trong tiếng Hebrew (từ Hannah) — và "An" ' +
+              'nghĩa là "ân điển" trong tiếng Hebrew (từ Hannah) — và "An" ' +
               'cũng có nghĩa là "bình an" trong tiếng Việt.',
           },
           {
             name: "Tâm",
             meaning:
-              "tên Việt (Hán-Việt 心): trái tim, tâm hồn, cốt lõi bên trong " +
-              "của một con người.",
+              "tên Việt (Hán-Việt 心): trái tim, tấm lòng, tâm hồn, cốt lõi " +
+              "bên trong của một con người.",
           },
           {
             name: "Sophie",
@@ -146,8 +146,7 @@ const CONFIG = {
           },
           {
             name: "Xuân",
-            meaning:
-              'tên của bà nội — nghĩa là "mùa xuân" trong tiếng Việt.',
+            meaning: "tên của bà nội.",
           },
           {
             name: "Đoàn",
@@ -155,8 +154,7 @@ const CONFIG = {
           },
         ],
         note:
-          'Một điều thú vị: Anna Tâm → An Tâm (安心), "một trái tim bình ' +
-          'an". 💛',
+          'Một điều thú vị: Anna Tâm → An Tâm (安心), "tâm hồn bình an". 💛',
       },
     },
   },

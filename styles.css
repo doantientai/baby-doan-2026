@@ -654,11 +654,10 @@ button:disabled {
   background: linear-gradient(135deg, var(--beige-deep), var(--beige));
 }
 
-.gift-reserve-alt {
-  background: #fff;
-  color: var(--beige-deep);
-  border: 2px solid var(--beige);
-  box-shadow: none;
+.gift-offer {
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 0.45rem 0.7rem;
 }
 
 /* Offer -> choose (take entirely / participate) */

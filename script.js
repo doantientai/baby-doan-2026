@@ -168,17 +168,14 @@ const CONFIG = {
     url: "https://script.google.com/macros/s/AKfycbwwBSD9WE6nHXhhz_PXR7WKWfwRQ8CeT75-eJBHQ_SQo5J9gzLu5js_pcSQU0177X8A/exec",
     title: "🎁 Liste de naissance",
     intro:
-      "Merci d'être là pour accueillir Anna 💛 Faites comme vous le sentez : " +
-      "un cadeau fait main, une participation, ou un cadeau de la liste. " +
-      "Cliquez « Je m'en occupe » pour réserver et éviter les doublons — " +
-      "certains cadeaux peuvent être partagés à plusieurs, et vous pouvez " +
-      "aussi proposer vos propres idées. On évite simplement les objets trop " +
-      "encombrants ou qui servent peu de temps.",
+      "Merci d'être là pour accueillir Anna 💛 Touchez 🎁 pour réserver un " +
+      "cadeau (seul·e ou à plusieurs), ou proposez votre propre idée.",
     loading: "Chargement de la liste…",
     error: "Impossible de charger la liste pour le moment.",
     empty: "La liste arrive bientôt 💛",
     takenPrefix: "Déjà pris",
-    offerBtn: "Offrir ce cadeau",
+    offerBtn: "🎁",
+    offerLabel: "Offrir ce cadeau",
     chooseSolo: "Je m'en occupe",
     chooseJoin: "Je participe (à plusieurs)",
     cancelChoice: "Annuler",
@@ -578,14 +575,16 @@ function buildGiftItem(it, cfg) {
     // Open: offer → choose to take it entirely or join.
     li.innerHTML =
       `<span class="gift-name">${word}${details}</span>` +
-      `<button class="gift-reserve gift-offer">${escapeHtml(
+      `<button class="gift-reserve gift-offer" aria-label="${escapeHtml(
+        cfg.offerLabel
+      )}" title="${escapeHtml(cfg.offerLabel)}">${escapeHtml(
         cfg.offerBtn
       )}</button>` +
       `<div class="gift-choice">` +
       `<button class="gift-reserve gift-choice-solo">${escapeHtml(
         cfg.chooseSolo
       )}</button>` +
-      `<button class="gift-reserve gift-reserve-alt gift-choice-join">${escapeHtml(
+      `<button class="gift-reserve gift-choice-join">${escapeHtml(
         cfg.chooseJoin
       )}</button>` +
       `<button class="gift-cancel">${escapeHtml(cfg.cancelChoice)}</button>` +

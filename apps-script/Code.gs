@@ -10,8 +10,8 @@
  * Column A = category, B = item name, C = optional details,
  * D = who reserved it (leave D empty = still available).
  *
- * SHEET_ID points at the data sheet, so the script doesn't have to be
- * container-bound to it. Replace it if you ever move to another sheet.
+ * This script is bound to its own Sheet (created via Extensions → Apps Script),
+ * so it just reads that Sheet's first tab — no sheet ID needed.
  *
  * Deploy: Extensions → Apps Script, paste this in, then
  *   Deploy → New deployment → type "Web app"
@@ -20,10 +20,8 @@
  * Copy the web-app URL into CONFIG.giftList.url in script.js.
  */
 
-const SHEET_ID = "1LCp1eMVhhB_Lglgs2yOeinVtP8XRF6XI5lRuReqtYIU";
-
 function sheet_() {
-  return SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
+  return SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
 }
 
 function getItems_() {

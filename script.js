@@ -41,7 +41,8 @@ const CONFIG = {
             name: "Anna",
             meaning:
               "« grâce » en hébreu (dérivé de Hannah) — et « An » signifie " +
-              "aussi « paix » en vietnamien.",
+              "aussi « paix » en vietnamien. Anna se prononce exactement " +
+              "pareil en vietnamien, en anglais et en français.",
           },
           {
             name: "Tâm",
@@ -87,7 +88,8 @@ const CONFIG = {
             name: "Anna",
             meaning:
               '"grace" in Hebrew (from Hannah) — and "An" also means ' +
-              '"peace" in Vietnamese.',
+              '"peace" in Vietnamese. "Anna" is pronounced exactly the same ' +
+              "in Vietnamese, English and French.",
           },
           {
             name: "Tâm",
@@ -132,7 +134,9 @@ const CONFIG = {
             name: "Anna",
             meaning:
               'nghĩa là "ân điển" trong tiếng Hebrew (từ Hannah) — và "An" ' +
-              'cũng có nghĩa là "bình an" trong tiếng Việt.',
+              'cũng có nghĩa là "bình an" trong tiếng Việt. "Anna" được phát ' +
+              "âm giống hệt nhau trong tiếng Việt, tiếng Anh và tiếng Pháp. " +
+              'Đừng nhầm Anna với "Ăn Na" nhé 😁',
           },
           {
             name: "Tâm",

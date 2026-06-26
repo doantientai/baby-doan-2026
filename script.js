@@ -160,6 +160,26 @@ const CONFIG = {
       },
     },
   },
+
+  // Liste de naissance (FR page only). Backed by a Google Sheet via an Apps
+  // Script web app. Paste that web-app URL into `url` to switch it on — the
+  // whole section stays hidden until then.
+  giftList: {
+    url: "",
+    title: "🎁 Liste de naissance",
+    intro:
+      "Pour gâter Anna, comme vous préférez : un cadeau fait main, une " +
+      "participation, ou un cadeau de la liste. Cliquez « Je m'en occupe » " +
+      "pour réserver et éviter les doublons.",
+    loading: "Chargement de la liste…",
+    error: "Impossible de charger la liste pour le moment.",
+    empty: "La liste arrive bientôt 💛",
+    available: "À offrir",
+    takenPrefix: "Déjà pris",
+    reserveBtn: "Je m'en occupe",
+    namePrompt: "Ton prénom (pour réserver ce cadeau) :",
+    takenByOther: "Oups, ce cadeau vient d'être réservé par",
+  },
 };
 
 /* =========================================================================
@@ -349,6 +369,88 @@ function buildPhotoPlaceholder() {
 }
 
 /* =========================================================================
+   Gift list (FR page) — reads/writes a Google Sheet via an Apps Script.
+   ========================================================================= */
+async function initGiftList() {
+  const cfg = CONFIG.giftList;
+  const root = $("#gift-list");
+  // Hidden unless the section exists AND a web-app URL is configured.
+  if (!root || !cfg || !cfg.url) return;
+  root.classList.remove("hidden");
+  $("#gift-title").textContent = cfg.title;
+  $("#gift-intro").textContent = cfg.intro;
+  await loadGiftItems();
+}
+
+async function loadGiftItems() {
+  const cfg = CONFIG.giftList;
+  const list = $("#gift-items");
+  list.innerHTML = `<p class="gift-status">${escapeHtml(cfg.loading)}</p>`;
+  try {
+    const res = await fetch(cfg.url);
+    const data = await res.json();
+    renderGiftItems(data.items || []);
+  } catch (e) {
+    list.innerHTML = `<p class="gift-status">${escapeHtml(cfg.error)}</p>`;
+  }
+}
+
+function renderGiftItems(items) {
+  const cfg = CONFIG.giftList;
+  const list = $("#gift-items");
+  list.innerHTML = "";
+  if (!items.length) {
+    list.innerHTML = `<p class="gift-status">${escapeHtml(cfg.empty)}</p>`;
+    return;
+  }
+  items.forEach((it) => {
+    const taken = (it.takenBy || "").trim();
+    const li = document.createElement("li");
+    li.className = "gift-item" + (taken ? " taken" : "");
+    const details = it.details
+      ? `<span class="gift-details">${escapeHtml(it.details)}</span>`
+      : "";
+    const right = taken
+      ? `<span class="gift-badge taken">✅ ${escapeHtml(
+          cfg.takenPrefix
+        )} · ${escapeHtml(taken)}</span>`
+      : `<button class="gift-reserve" data-row="${it.row}">${escapeHtml(
+          cfg.reserveBtn
+        )}</button>`;
+    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
+      it.item
+    )}</span>${details}</span>${right}`;
+    if (!taken) {
+      li.querySelector(".gift-reserve").addEventListener("click", (e) =>
+        reserveGift(it.row, e.currentTarget)
+      );
+    }
+    list.appendChild(li);
+  });
+}
+
+async function reserveGift(row, btn) {
+  const cfg = CONFIG.giftList;
+  const name = (prompt(cfg.namePrompt) || "").trim();
+  if (!name) return;
+  btn.disabled = true;
+  try {
+    const res = await fetch(cfg.url, {
+      method: "POST",
+      body: JSON.stringify({ row, name }),
+    });
+    const data = await res.json();
+    if (data.ok === false && data.takenBy) {
+      alert(`${cfg.takenByOther} ${data.takenBy}.`);
+    }
+  } catch (e) {
+    alert(cfg.error);
+  }
+  // Re-sync with the sheet so everyone sees the same state.
+  await loadGiftItems();
+}
+
+/* =========================================================================
    Init
    ========================================================================= */
 function initGame() {
@@ -386,5 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if ($("#reveal-photo")) {
     // Standalone details page — render in the page's language.
     renderReveal(document.body.dataset.lang || "fr");
+    // Gift list only appears where the section exists (the FR page).
+    initGiftList();
   }
 });

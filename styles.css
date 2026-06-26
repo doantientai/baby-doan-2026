@@ -469,6 +469,89 @@ button:disabled {
 }
 
 
+/* Gift list */
+.gift-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  margin-top: 1rem;
+}
+
+.gift-card-title {
+  color: var(--beige-deep);
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+.gift-intro {
+  color: var(--soft);
+  font-size: 0.95rem;
+  text-align: center;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.gift-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gift-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: #f6efe1;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.gift-item.taken {
+  opacity: 0.7;
+}
+
+.gift-name {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  min-width: 0;
+}
+
+.gift-word {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.gift-details {
+  font-size: 0.8rem;
+  color: var(--soft);
+}
+
+.gift-badge.taken {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--good);
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.gift-reserve {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.9rem;
+  background: linear-gradient(135deg, var(--beige-deep), var(--beige));
+}
+
+.gift-status {
+  text-align: center;
+  color: var(--soft);
+  margin: 0.5rem 0;
+}
+
 @media (max-width: 420px) {
   .reveal-facts {
     grid-template-columns: 1fr;

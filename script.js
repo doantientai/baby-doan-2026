@@ -322,10 +322,22 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+const NAME_COLORS = ["#b5762e", "#c2693f", "#7d9a6f", "#6f8aa8", "#9b6a9b"];
+
 function renderReveal(lang) {
   const r = CONFIG.reveal;
   const t = r.i18n[lang] || r.i18n.fr;
-  $("#reveal-name").textContent = t.fullName;
+  // Full name with each part in its own colour.
+  $("#reveal-name").innerHTML = t.fullName
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(
+      (w, i) =>
+        `<span style="color:${NAME_COLORS[i % NAME_COLORS.length]}">${escapeHtml(
+          w
+        )}</span>`
+    )
+    .join(" ");
   const img = $("#reveal-photo");
   img.src = r.photo;
   img.alt = t.photoAlt;
@@ -370,6 +382,19 @@ function renderReveal(lang) {
   } else {
     note.style.display = "none";
   }
+  setupRevealCollapsibles();
+}
+
+function setupRevealCollapsibles() {
+  $$(".reveal-head").forEach((head) => {
+    if (head.dataset.bound) return;
+    head.dataset.bound = "1";
+    head.addEventListener("click", () => {
+      const section = head.closest(".reveal-section");
+      const collapsed = section.classList.toggle("collapsed");
+      head.setAttribute("aria-expanded", String(!collapsed));
+    });
+  });
 }
 
 function buildPhotoPlaceholder() {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anna Tâm Sophie Xuân Doan 🎀</title>
-    <link rel="stylesheet" href="styles.css?v=25" />
+    <link rel="stylesheet" href="styles.css?v=26" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>"
@@ -19,10 +19,23 @@
       <div class="reveal-card">
         <img id="reveal-photo" class="reveal-photo" alt="" />
         <h3 id="reveal-name" class="reveal-name"></h3>
-        <div id="reveal-facts" class="reveal-facts"></div>
-        <div id="reveal-structure" class="reveal-structure"></div>
-        <h4 class="reveal-subtitle">Le sens de chaque prénom</h4>
-        <ul id="reveal-names" class="reveal-names"></ul>
+        <div class="reveal-section collapsed">
+          <button class="reveal-head" type="button" aria-expanded="false">
+            <span class="gift-caret" aria-hidden="true">▾</span><span>Informations</span>
+          </button>
+          <div class="reveal-body">
+            <div id="reveal-facts" class="reveal-facts"></div>
+          </div>
+        </div>
+        <div class="reveal-section collapsed">
+          <button class="reveal-head" type="button" aria-expanded="false">
+            <span class="gift-caret" aria-hidden="true">▾</span><span>Le sens de chaque prénom</span>
+          </button>
+          <div class="reveal-body">
+            <div id="reveal-structure" class="reveal-structure"></div>
+            <ul id="reveal-names" class="reveal-names"></ul>
+          </div>
+        </div>
         <p id="reveal-name-note" class="reveal-name-note"></p>
       </div>
 
@@ -50,6 +63,6 @@
       </p>
     </main>
 
-    <script src="script.js?v=25"></script>
+    <script src="script.js?v=26"></script>
   </body>
 </html>

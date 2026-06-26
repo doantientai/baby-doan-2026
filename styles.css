@@ -401,6 +401,43 @@ button:disabled {
   margin: 1.5rem 0 0.6rem;
 }
 
+.reveal-section {
+  margin: 0.75rem 0 0;
+  border-top: 1px solid #ece0cc;
+}
+
+.reveal-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  color: var(--beige-deep);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.85rem 0.2rem;
+}
+
+.reveal-head:hover:not(:disabled) {
+  transform: none;
+}
+
+.reveal-section.collapsed .gift-caret {
+  transform: rotate(-90deg);
+}
+
+.reveal-body {
+  padding-bottom: 0.5rem;
+}
+
+.reveal-section.collapsed .reveal-body {
+  display: none;
+}
+
 .reveal-names {
   list-style: none;
   padding: 0;

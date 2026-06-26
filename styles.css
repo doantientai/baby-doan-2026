@@ -526,7 +526,10 @@ button:disabled {
 }
 
 .gift-item.taken {
-  opacity: 0.7;
+  opacity: 0.75;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
 }
 
 .gift-name {
@@ -539,6 +542,7 @@ button:disabled {
 .gift-word {
   font-weight: 700;
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 .gift-details {
@@ -550,8 +554,8 @@ button:disabled {
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--good);
-  flex-shrink: 0;
-  text-align: right;
+  text-align: left;
+  overflow-wrap: anywhere;
 }
 
 .gift-reserve {

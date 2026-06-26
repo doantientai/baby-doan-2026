@@ -499,6 +499,21 @@ button:disabled {
   margin: 0;
 }
 
+.gift-category {
+  list-style: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--beige-deep);
+  margin: 1rem 0 0.4rem;
+  padding-left: 0.2rem;
+}
+
+.gift-category:first-child {
+  margin-top: 0;
+}
+
 .gift-item {
   display: flex;
   align-items: center;

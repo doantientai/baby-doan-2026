@@ -1,36 +1,43 @@
 /**
- * Baby gift-list backend — Google Apps Script bound to the Google Sheet.
+ * Baby gift-list backend — Google Apps Script.
  *
  * The Sheet's first tab should have a header row, then one item per row:
  *
- *   | Article        | Détails | Pris par |
- *   | Poussette      |         |          |
- *   | Body 3 mois    | x5      |          |
+ *   | Catégorie         | Article     | Détails | Pris par |
+ *   | Pour le quotidien | Vêtements   | …       |          |
+ *   | Éveil & jouets    | Mobile      | …       |          |
  *
- * Column A = item name, B = optional details, C = who reserved it
- * (leave C empty = still available).
+ * Column A = category, B = item name, C = optional details,
+ * D = who reserved it (leave D empty = still available).
+ *
+ * SHEET_ID points at the data sheet, so the script doesn't have to be
+ * container-bound to it. Replace it if you ever move to another sheet.
  *
  * Deploy: Extensions → Apps Script, paste this in, then
  *   Deploy → New deployment → type "Web app"
  *   Execute as: Me   ·   Who has access: Anyone
- * Copy the web-app URL and paste it into CONFIG.giftList.url in script.js.
+ * (To update later: Deploy → Manage deployments → edit → New version.)
+ * Copy the web-app URL into CONFIG.giftList.url in script.js.
  */
 
+const SHEET_ID = "1LCp1eMVhhB_Lglgs2yOeinVtP8XRF6XI5lRuReqtYIU";
+
 function sheet_() {
-  return SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  return SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
 }
 
 function getItems_() {
   const values = sheet_().getDataRange().getValues();
   const items = [];
   for (let i = 1; i < values.length; i++) {
-    const item = values[i][0];
+    const item = values[i][1];
     if (!item) continue;
     items.push({
       row: i + 1, // 1-based sheet row
+      category: String(values[i][0] || ""),
       item: String(item),
-      details: String(values[i][1] || ""),
-      takenBy: String(values[i][2] || ""),
+      details: String(values[i][2] || ""),
+      takenBy: String(values[i][3] || ""),
     });
   }
   return items;
@@ -60,7 +67,7 @@ function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(5000);
   try {
-    const cell = sheet_().getRange(row, 3); // column C = "Pris par"
+    const cell = sheet_().getRange(row, 4); // column D = "Pris par"
     const current = String(cell.getValue() || "").trim();
     if (current) return json_({ ok: false, takenBy: current });
     cell.setValue(name);

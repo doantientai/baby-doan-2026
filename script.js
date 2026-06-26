@@ -403,7 +403,16 @@ function renderGiftItems(items) {
     list.innerHTML = `<p class="gift-status">${escapeHtml(cfg.empty)}</p>`;
     return;
   }
+  let lastCategory = null;
   items.forEach((it) => {
+    const category = (it.category || "").trim();
+    if (category && category !== lastCategory) {
+      const head = document.createElement("li");
+      head.className = "gift-category";
+      head.textContent = category;
+      list.appendChild(head);
+      lastCategory = category;
+    }
     const taken = (it.takenBy || "").trim();
     const li = document.createElement("li");
     li.className = "gift-item" + (taken ? " taken" : "");

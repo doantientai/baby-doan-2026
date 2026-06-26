@@ -8,14 +8,15 @@ Apps Script. No server to host, nothing secret in the website.
 1. New Google Sheet.
 2. First row = headers, then one item per row:
 
-   | Article     | Détails | Pris par |
-   | ----------- | ------- | -------- |
-   | Poussette   |         |          |
-   | Body 3 mois | x5      |          |
+   | Catégorie         | Article     | Détails | Pris par |
+   | ----------------- | ----------- | ------- | -------- |
+   | Pour le quotidien | Vêtements   |         |          |
+   | Éveil & jouets    | Mobile      | x1      |          |
 
-   - **Article** (col A): what you need
-   - **Détails** (col B): optional (size, quantity, link…)
-   - **Pris par** (col C): leave empty — filled in when someone reserves
+   - **Catégorie** (col A): section header (items are grouped by it)
+   - **Article** (col B): what you need
+   - **Détails** (col C): optional (size, quantity, link…)
+   - **Pris par** (col D): leave empty — filled in when someone reserves
 
 ## 2. Add the script
 

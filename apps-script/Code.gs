@@ -85,31 +85,37 @@ function addItem_(body) {
 function reserve_(body) {
   const row = Number(body.row);
   const name = String(body.name || "").trim();
+  const mode = String(body.mode || "join").trim(); // "solo" | "join"
   if (!row || !name) return json_({ ok: false, error: "missing row/name" });
 
   const lock = LockService.getScriptLock();
   lock.waitLock(5000);
   try {
     const sh = sheet_();
-    const cell = sh.getRange(row, 4); // column D = "Pris par"
-    const current = String(cell.getValue() || "").trim();
-    const isMulti = String(sh.getRange(row, 5).getValue() || "").trim() !== "";
-    if (isMulti) {
-      // Shareable item: append the name to the list (no duplicates).
-      const names = current
-        ? current.split(",").map((s) => s.trim()).filter(Boolean)
-        : [];
-      if (!names.some((n) => n.toLowerCase() === name.toLowerCase())) {
-        names.push(name);
-      }
-      const joined = names.join(", ");
-      cell.setValue(joined);
-      return json_({ ok: true, takenBy: joined, multi: true });
+    const dCell = sh.getRange(row, 4); // column D = "Pris par"
+    const eCell = sh.getRange(row, 5); // column E = "Plusieurs" (shared flag)
+    const current = String(dCell.getValue() || "").trim();
+    const shared = String(eCell.getValue() || "").trim() !== "";
+
+    if (mode === "solo") {
+      // Take the whole gift — only possible if untouched and not shared.
+      if (shared) return json_({ ok: false, error: "shared" });
+      if (current) return json_({ ok: false, takenBy: current });
+      dCell.setValue(name);
+      return json_({ ok: true, takenBy: name, multi: false });
     }
-    // Single item: first come, first served.
-    if (current) return json_({ ok: false, takenBy: current });
-    cell.setValue(name);
-    return json_({ ok: true, takenBy: name });
+
+    // Join: mark the item shared and append the name (no duplicates).
+    if (!shared) eCell.setValue("oui");
+    const names = current
+      ? current.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    if (!names.some((n) => n.toLowerCase() === name.toLowerCase())) {
+      names.push(name);
+    }
+    const joined = names.join(", ");
+    dCell.setValue(joined);
+    return json_({ ok: true, takenBy: joined, multi: true });
   } finally {
     lock.releaseLock();
   }

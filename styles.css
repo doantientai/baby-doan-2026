@@ -654,6 +654,48 @@ button:disabled {
   background: linear-gradient(135deg, var(--beige-deep), var(--beige));
 }
 
+.gift-reserve-alt {
+  background: #fff;
+  color: var(--beige-deep);
+  border: 2px solid var(--beige);
+  box-shadow: none;
+}
+
+/* Offer -> choose (take entirely / participate) */
+.gift-choice {
+  display: none;
+}
+
+.gift-item.choosing {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.gift-item.choosing .gift-offer {
+  display: none;
+}
+
+.gift-item.choosing .gift-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.gift-cancel {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: var(--soft);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.gift-cancel:hover:not(:disabled) {
+  transform: none;
+}
+
 .gift-status {
   text-align: center;
   color: var(--soft);

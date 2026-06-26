@@ -17,9 +17,11 @@ Apps Script. No server to host, nothing secret in the website.
    - **Article** (col B): what you need
    - **Détails** (col C): optional (size, quantity, link…)
    - **Pris par** (col D): leave empty — filled in when someone reserves
-   - **Plusieurs** (col E): put any text (e.g. "oui") for items several people
-     can share — those collect a list of names and show "Je participe" instead
-     of locking to one person. Leave empty for one-person items.
+   - **Plusieurs** (col E): optional. Leave empty and the giver chooses on the
+     page — "Je m'en occupe" (locks it) or "Je participe" (shared list). Put
+     any text (e.g. "oui") to *force* an item shared from the start (e.g.
+     couches). The app also sets this to "oui" automatically when the first
+     person picks "Je participe".
 
 ## 2. Add the script
 

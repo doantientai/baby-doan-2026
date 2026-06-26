@@ -177,11 +177,15 @@ const CONFIG = {
     loading: "Chargement de la liste…",
     error: "Impossible de charger la liste pour le moment.",
     empty: "La liste arrive bientôt 💛",
-    available: "À offrir",
     takenPrefix: "Déjà pris",
-    reserveBtn: "Je m'en occupe",
+    offerBtn: "Offrir ce cadeau",
+    chooseSolo: "Je m'en occupe",
+    chooseJoin: "Je participe (à plusieurs)",
+    cancelChoice: "Annuler",
     reserveBtnMulti: "Je participe",
     multiPrefix: "Déjà :",
+    namePromptSolo: "Ton prénom (tu offres ce cadeau) :",
+    namePromptJoin: "Ton prénom (tu participes) :",
     addToggle: "➕ Proposer une idée",
     addItemPlaceholder: "Idée de cadeau",
     addDetailsPlaceholder: "Détails (optionnel)",
@@ -558,59 +562,72 @@ function buildGiftItem(it, cfg) {
   const details = it.details
     ? `<span class="gift-details">${escapeHtml(it.details)}</span>`
     : "";
+  const word = `<span class="gift-word">${escapeHtml(it.item)}</span>`;
   const li = document.createElement("li");
-  let hasButton = false;
+  li.className = "gift-item";
 
   if (it.multi) {
-    // Shareable item: list contributors, keep a "Je participe" button.
+    // Shared item: contributors + an always-open "Je participe" button.
     const contributors = taken
       ? `<span class="gift-contributors">👥 ${escapeHtml(
           cfg.multiPrefix
         )} ${escapeHtml(taken)}</span>`
       : "";
-    li.className = "gift-item";
-    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
-      it.item
-    )}</span>${details}${contributors}</span><button class="gift-reserve" data-row="${
-      it.row
-    }">${escapeHtml(cfg.reserveBtnMulti)}</button>`;
-    hasButton = true;
+    li.innerHTML = `<span class="gift-name">${word}${details}${contributors}</span><button class="gift-reserve gift-join">${escapeHtml(
+      cfg.reserveBtnMulti
+    )}</button>`;
+    li.querySelector(".gift-join").addEventListener("click", (e) =>
+      reserveGift(it.row, "join", e.currentTarget)
+    );
   } else if (taken) {
-    // Single item already reserved.
-    li.className = "gift-item taken";
-    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
-      it.item
-    )}</span>${details}</span><span class="gift-badge taken">✅ ${escapeHtml(
+    // Taken entirely by one person.
+    li.classList.add("taken");
+    li.innerHTML = `<span class="gift-name">${word}${details}</span><span class="gift-badge taken">✅ ${escapeHtml(
       cfg.takenPrefix
     )} · ${escapeHtml(taken)}</span>`;
   } else {
-    // Single item still available.
-    li.className = "gift-item";
-    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
-      it.item
-    )}</span>${details}</span><button class="gift-reserve" data-row="${
-      it.row
-    }">${escapeHtml(cfg.reserveBtn)}</button>`;
-    hasButton = true;
-  }
-
-  if (hasButton) {
-    li.querySelector(".gift-reserve").addEventListener("click", (e) =>
-      reserveGift(it.row, e.currentTarget)
+    // Open: offer → choose to take it entirely or join.
+    li.innerHTML =
+      `<span class="gift-name">${word}${details}</span>` +
+      `<button class="gift-reserve gift-offer">${escapeHtml(
+        cfg.offerBtn
+      )}</button>` +
+      `<div class="gift-choice">` +
+      `<button class="gift-reserve gift-choice-solo">${escapeHtml(
+        cfg.chooseSolo
+      )}</button>` +
+      `<button class="gift-reserve gift-reserve-alt gift-choice-join">${escapeHtml(
+        cfg.chooseJoin
+      )}</button>` +
+      `<button class="gift-cancel">${escapeHtml(cfg.cancelChoice)}</button>` +
+      `</div>`;
+    li.querySelector(".gift-offer").addEventListener("click", () =>
+      li.classList.add("choosing")
+    );
+    li.querySelector(".gift-choice-solo").addEventListener("click", (e) =>
+      reserveGift(it.row, "solo", e.currentTarget)
+    );
+    li.querySelector(".gift-choice-join").addEventListener("click", (e) =>
+      reserveGift(it.row, "join", e.currentTarget)
+    );
+    li.querySelector(".gift-cancel").addEventListener("click", () =>
+      li.classList.remove("choosing")
     );
   }
   return li;
 }
 
-async function reserveGift(row, btn) {
+async function reserveGift(row, mode, btn) {
   const cfg = CONFIG.giftList;
-  const name = (prompt(cfg.namePrompt) || "").trim();
+  const promptText =
+    mode === "solo" ? cfg.namePromptSolo : cfg.namePromptJoin;
+  const name = (prompt(promptText) || "").trim();
   if (!name) return;
-  btn.disabled = true;
+  if (btn) btn.disabled = true;
   try {
     const res = await fetch(cfg.url, {
       method: "POST",
-      body: JSON.stringify({ row, name }),
+      body: JSON.stringify({ row, name, mode }),
     });
     const data = await res.json();
     if (data.ok === false && data.takenBy) {

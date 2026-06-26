@@ -170,7 +170,8 @@ const CONFIG = {
     intro:
       "Pour gâter Anna, comme vous préférez : un cadeau fait main, une " +
       "participation, ou un cadeau de la liste. Cliquez « Je m'en occupe » " +
-      "pour réserver et éviter les doublons.",
+      "pour réserver et éviter les doublons. Merci du fond du cœur pour " +
+      "votre générosité ! 💛",
     loading: "Chargement de la liste…",
     error: "Impossible de charger la liste pour le moment.",
     empty: "La liste arrive bientôt 💛",

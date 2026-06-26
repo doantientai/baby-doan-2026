@@ -701,6 +701,31 @@ button:disabled {
   margin: 0.5rem 0;
 }
 
+.gift-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  color: var(--soft);
+  padding: 1.5rem 0;
+}
+
+.spinner {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 3px solid #e6dcc8;
+  border-top-color: var(--beige-deep);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .gift-add {
   margin-top: 1rem;
 }

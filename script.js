@@ -484,7 +484,9 @@ async function submitGiftIdea() {
 async function loadGiftItems() {
   const cfg = CONFIG.giftList;
   const list = $("#gift-items");
-  list.innerHTML = `<p class="gift-status">${escapeHtml(cfg.loading)}</p>`;
+  list.innerHTML = `<div class="gift-loading"><span class="spinner" aria-hidden="true"></span><span>${escapeHtml(
+    cfg.loading
+  )}</span></div>`;
   try {
     const res = await fetch(cfg.url);
     const data = await res.json();

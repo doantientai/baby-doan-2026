@@ -165,7 +165,7 @@ const CONFIG = {
   // Script web app. Paste that web-app URL into `url` to switch it on — the
   // whole section stays hidden until then.
   giftList: {
-    url: "https://script.google.com/macros/s/AKfycbxEjqctt0KpN0O__HVQBVosuFTN77VsiauZ5najbpgPE2og_fDKXepnmOqZWbDLTGxCUw/exec",
+    url: "https://script.google.com/macros/s/AKfycbyGUgwibX55qUcspTeDK7qLvYsnMNqiQsVJ698Pv523dtjcHgwGBijDgdzYchcptHzq/exec",
     title: "🎁 Liste de naissance",
     intro:
       "Pour gâter Anna, comme vous préférez : un cadeau fait main, une " +

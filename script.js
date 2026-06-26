@@ -179,6 +179,15 @@ const CONFIG = {
     reserveBtn: "Je m'en occupe",
     reserveBtnMulti: "Je participe",
     multiPrefix: "Déjà :",
+    addToggle: "➕ Proposer une idée",
+    addItemPlaceholder: "Idée de cadeau",
+    addDetailsPlaceholder: "Détails (optionnel)",
+    addNamePlaceholder: "Ton prénom (si tu l'offres)",
+    addCategoryOther: "Autres idées",
+    addSubmit: "Ajouter à la liste",
+    addMissing: "Indique au moins le nom du cadeau.",
+    addThanks: "Merci ! Ton idée a été ajoutée 💛",
+    addError: "Impossible d'ajouter l'idée. Réessaie.",
     namePrompt: "Ton prénom (pour réserver ce cadeau) :",
     takenByOther: "Oups, ce cadeau vient d'être réservé par",
   },
@@ -381,7 +390,77 @@ async function initGiftList() {
   root.classList.remove("hidden");
   $("#gift-title").textContent = cfg.title;
   $("#gift-intro").textContent = cfg.intro;
+  setupGiftAdd();
   await loadGiftItems();
+}
+
+function setupGiftAdd() {
+  const cfg = CONFIG.giftList;
+  const toggle = $("#gift-add-toggle");
+  if (!toggle) return;
+  toggle.textContent = cfg.addToggle;
+  $("#gift-add-item").placeholder = cfg.addItemPlaceholder;
+  $("#gift-add-details").placeholder = cfg.addDetailsPlaceholder;
+  $("#gift-add-name").placeholder = cfg.addNamePlaceholder;
+  $("#gift-add-submit").textContent = cfg.addSubmit;
+  toggle.addEventListener("click", () =>
+    $("#gift-add-form").classList.toggle("hidden")
+  );
+  $("#gift-add-submit").addEventListener("click", submitGiftIdea);
+}
+
+function populateAddCategories(items) {
+  const sel = $("#gift-add-category");
+  if (!sel) return;
+  const cfg = CONFIG.giftList;
+  const cats = [];
+  items.forEach((it) => {
+    const c = (it.category || "").trim();
+    if (c && !cats.includes(c)) cats.push(c);
+  });
+  if (!cats.includes(cfg.addCategoryOther)) cats.push(cfg.addCategoryOther);
+  sel.innerHTML = cats
+    .map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`)
+    .join("");
+}
+
+async function submitGiftIdea() {
+  const cfg = CONFIG.giftList;
+  const msg = $("#gift-add-msg");
+  const item = $("#gift-add-item").value.trim();
+  if (!item) {
+    msg.textContent = cfg.addMissing;
+    return;
+  }
+  const payload = {
+    action: "add",
+    item,
+    details: $("#gift-add-details").value.trim(),
+    category: $("#gift-add-category").value,
+    name: $("#gift-add-name").value.trim(),
+  };
+  const btn = $("#gift-add-submit");
+  btn.disabled = true;
+  msg.textContent = "";
+  try {
+    const res = await fetch(cfg.url, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      msg.textContent = cfg.addThanks;
+      $("#gift-add-item").value = "";
+      $("#gift-add-details").value = "";
+      $("#gift-add-name").value = "";
+      await loadGiftItems();
+    } else {
+      msg.textContent = cfg.addError;
+    }
+  } catch (e) {
+    msg.textContent = cfg.addError;
+  }
+  btn.disabled = false;
 }
 
 async function loadGiftItems() {
@@ -392,6 +471,7 @@ async function loadGiftItems() {
     const res = await fetch(cfg.url);
     const data = await res.json();
     renderGiftItems(data.items || []);
+    populateAddCategories(data.items || []);
   } catch (e) {
     list.innerHTML = `<p class="gift-status">${escapeHtml(cfg.error)}</p>`;
   }

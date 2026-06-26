@@ -61,6 +61,28 @@ function doPost(e) {
   } catch (err) {
     return json_({ ok: false, error: "bad request" });
   }
+  if (body.action === "add") return addItem_(body);
+  return reserve_(body);
+}
+
+function addItem_(body) {
+  const item = String(body.item || "").trim();
+  if (!item) return json_({ ok: false, error: "missing item" });
+  const category = String(body.category || "").trim() || "Autres idées";
+  const details = String(body.details || "").trim();
+  const name = String(body.name || "").trim();
+  const lock = LockService.getScriptLock();
+  lock.waitLock(5000);
+  try {
+    // [Catégorie, Article, Détails, Pris par, Plusieurs]
+    sheet_().appendRow([category, item, details, name, ""]);
+    return json_({ ok: true });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function reserve_(body) {
   const row = Number(body.row);
   const name = String(body.name || "").trim();
   if (!row || !name) return json_({ ok: false, error: "missing row/name" });

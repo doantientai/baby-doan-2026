@@ -579,6 +579,33 @@ button:disabled {
   margin: 0.5rem 0;
 }
 
+.gift-add {
+  margin-top: 1rem;
+}
+
+.gift-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.gift-add-form input,
+.gift-add-form select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid #e6dcc8;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  background: #fff;
+}
+
+.gift-add-form input:focus,
+.gift-add-form select:focus {
+  border-color: var(--beige);
+}
+
 @media (max-width: 420px) {
   .reveal-facts {
     grid-template-columns: 1fr;

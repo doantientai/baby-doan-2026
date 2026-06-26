@@ -55,3 +55,7 @@ stays hidden.
 Just edit the Sheet — add/remove rows anytime. No redeploy needed (only redeploy
 if you change `Code.gs`). To free up an item someone reserved, clear its
 **Pris par** cell.
+
+Family can also **suggest new gifts** straight from the page ("➕ Proposer une
+idée") — those get appended to the Sheet as new rows (with the chosen category,
+and their name in *Pris par* if they're offering it).

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anna Tâm Sophie Xuân Doan 🎀</title>
-    <link rel="stylesheet" href="styles.css?v=20" />
+    <link rel="stylesheet" href="styles.css?v=21" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>"
@@ -30,6 +30,18 @@
         <h4 id="gift-title" class="gift-card-title"></h4>
         <p id="gift-intro" class="gift-intro"></p>
         <ul id="gift-items" class="gift-items"></ul>
+
+        <div class="gift-add">
+          <button id="gift-add-toggle" class="share-btn" type="button"></button>
+          <div id="gift-add-form" class="gift-add-form hidden">
+            <input id="gift-add-item" type="text" />
+            <input id="gift-add-details" type="text" />
+            <select id="gift-add-category"></select>
+            <input id="gift-add-name" type="text" />
+            <button id="gift-add-submit" class="cta-btn" type="button"></button>
+            <p id="gift-add-msg" class="gift-status"></p>
+          </div>
+        </div>
       </div>
 
       <p class="details-back">
@@ -38,6 +50,6 @@
       </p>
     </main>
 
-    <script src="script.js?v=20"></script>
+    <script src="script.js?v=21"></script>
   </body>
 </html>

@@ -51,12 +51,12 @@ const CONFIG = {
           },
           {
             name: "Sophie",
-            meaning: "en hommage à l'une de ses deux grand-mères.",
+            meaning: "en hommage à sa grand-mère maternelle.",
           },
           {
             name: "Xuân",
             meaning:
-              "en hommage à son autre grand-mère — « printemps » en " +
+              "en hommage à sa grand-mère paternelle — « printemps » en " +
               "vietnamien.",
           },
           {
@@ -97,12 +97,13 @@ const CONFIG = {
           },
           {
             name: "Sophie",
-            meaning: "in honour of one of her two grandmothers.",
+            meaning: "in honour of her maternal grandmother (her mum's mother).",
           },
           {
             name: "Xuân",
             meaning:
-              'in honour of her other grandmother — "spring" in Vietnamese.',
+              "in honour of her paternal grandmother (her dad's mother) — " +
+              '"spring" in Vietnamese.',
           },
           {
             name: "Doan",
@@ -141,13 +142,12 @@ const CONFIG = {
           },
           {
             name: "Sophie",
-            meaning: "đặt theo tên một trong hai người bà của bé.",
+            meaning: "lấy từ tên bà ngoại của bé.",
           },
           {
             name: "Xuân",
             meaning:
-              'đặt theo người bà còn lại — nghĩa là "mùa xuân" trong tiếng ' +
-              "Việt.",
+              'tên của bà nội — nghĩa là "mùa xuân" trong tiếng Việt.',
           },
           {
             name: "Đoàn",

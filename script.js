@@ -61,7 +61,7 @@ const CONFIG = {
           },
           {
             name: "Doan",
-            meaning: "le nom de famille, partagé par toute la famille.",
+            meaning: "le nom de famille — celui de son papa.",
           },
         ],
         note:
@@ -107,7 +107,7 @@ const CONFIG = {
           },
           {
             name: "Doan",
-            meaning: "the family name, shared by the whole family.",
+            meaning: "the family name — her father's.",
           },
         ],
         note:
@@ -151,7 +151,7 @@ const CONFIG = {
           },
           {
             name: "Đoàn",
-            meaning: "họ của gia đình, chung cho cả nhà.",
+            meaning: "bé mang họ của bố.",
           },
         ],
         note:

@@ -20,10 +20,10 @@ const CONFIG = {
   // The big reveal. Shared bits live at the top; everything language-specific
   // lives under i18n (fr = the game's reveal; fr/en/vn = the standalone pages).
   reveal: {
-    fullName: "Anna Tâm Sophie Xuân Doan",
     photo: "photos/anna-1.jpg",
     i18n: {
       fr: {
+        fullName: "Anna Tâm Sophie Xuân Doan",
         photoAlt: "Bébé Anna",
         facts: [
           { label: "Née le", value: "22 juin 2026 à 21h39" },
@@ -31,37 +31,37 @@ const CONFIG = {
           { label: "Poids", value: "2,995 kg" },
           { label: "Taille", value: "49 cm" },
         ],
+        structure: [
+          { label: "Prénom", value: "Anna" },
+          { label: "Autres prénoms", value: "Tâm, Sophie, Xuân" },
+          { label: "Nom de famille", value: "Doan" },
+        ],
         names: [
           {
-            role: "1er prénom",
             name: "Anna",
             meaning:
               "« grâce » en hébreu (dérivé de Hannah) — et « An » signifie " +
               "aussi « paix » en vietnamien.",
           },
           {
-            role: "2e prénom",
             name: "Tâm",
             meaning:
               "prénom vietnamien (du sino-vietnamien 心) : le cœur, l'âme, " +
               "le centre intérieur d'une personne.",
           },
           {
-            role: "3e prénom",
             name: "Sophie",
             meaning: "en hommage à l'une de ses deux grand-mères.",
           },
           {
-            role: "4e prénom",
             name: "Xuân",
             meaning:
               "en hommage à son autre grand-mère — « printemps » en " +
               "vietnamien.",
           },
           {
-            role: "Nom de famille",
             name: "Doan",
-            meaning: "le nom de famille vietnamien, partagé par toute la famille.",
+            meaning: "le nom de famille, partagé par toute la famille.",
           },
         ],
         note:
@@ -69,6 +69,7 @@ const CONFIG = {
           "paisible ». 💛",
       },
       en: {
+        fullName: "Anna Tâm Sophie Xuân Doan",
         photoAlt: "Baby Anna",
         facts: [
           { label: "Born", value: "June 22, 2026 at 9:39 PM" },
@@ -76,42 +77,43 @@ const CONFIG = {
           { label: "Weight", value: "2.995 kg" },
           { label: "Height", value: "49 cm" },
         ],
+        structure: [
+          { label: "Given name", value: "Anna" },
+          { label: "Middle names", value: "Tâm, Sophie, Xuân" },
+          { label: "Family name", value: "Doan" },
+        ],
         names: [
           {
-            role: "First name",
             name: "Anna",
             meaning:
               '"grace" in Hebrew (from Hannah) — and "An" also means ' +
               '"peace" in Vietnamese.',
           },
           {
-            role: "Second name",
             name: "Tâm",
             meaning:
               "a Vietnamese name (from Sino-Vietnamese 心): the heart, the " +
               "soul, a person's inner core.",
           },
           {
-            role: "Third name",
             name: "Sophie",
             meaning: "in honour of one of her two grandmothers.",
           },
           {
-            role: "Fourth name",
             name: "Xuân",
             meaning:
               'in honour of her other grandmother — "spring" in Vietnamese.',
           },
           {
-            role: "Family name",
             name: "Doan",
-            meaning: "the Vietnamese family name, shared by the whole family.",
+            meaning: "the family name, shared by the whole family.",
           },
         ],
         note:
           'A lovely touch: Anna Tâm → An Tâm (安心), "a peaceful heart". 💛',
       },
       vn: {
+        fullName: "Anna Tâm Sophie Xuân Đoàn",
         photoAlt: "Bé Anna",
         facts: [
           { label: "Ngày sinh", value: "22/06/2026 lúc 21:39" },
@@ -119,37 +121,37 @@ const CONFIG = {
           { label: "Cân nặng", value: "2,995 kg" },
           { label: "Chiều dài", value: "49 cm" },
         ],
+        structure: [
+          { label: "Tên gọi", value: "Anna" },
+          { label: "Tên đệm", value: "Tâm, Sophie, Xuân" },
+          { label: "Họ", value: "Đoàn" },
+        ],
         names: [
           {
-            role: "Tên thứ nhất",
             name: "Anna",
             meaning:
               'nghĩa là "ân sủng" trong tiếng Hebrew (từ Hannah) — và "An" ' +
               'cũng có nghĩa là "bình an" trong tiếng Việt.',
           },
           {
-            role: "Tên thứ hai",
             name: "Tâm",
             meaning:
               "tên Việt (Hán-Việt 心): trái tim, tâm hồn, cốt lõi bên trong " +
               "của một con người.",
           },
           {
-            role: "Tên thứ ba",
             name: "Sophie",
             meaning: "đặt theo tên một trong hai người bà của bé.",
           },
           {
-            role: "Tên thứ tư",
             name: "Xuân",
             meaning:
               'đặt theo người bà còn lại — nghĩa là "mùa xuân" trong tiếng ' +
               "Việt.",
           },
           {
-            role: "Họ",
-            name: "Doan",
-            meaning: "họ của người Việt, chung cho cả gia đình.",
+            name: "Đoàn",
+            meaning: "họ của gia đình, chung cho cả nhà.",
           },
         ],
         note:
@@ -292,7 +294,7 @@ function escapeHtml(str) {
 function renderReveal(lang) {
   const r = CONFIG.reveal;
   const t = r.i18n[lang] || r.i18n.fr;
-  $("#reveal-name").textContent = r.fullName;
+  $("#reveal-name").textContent = t.fullName;
   const img = $("#reveal-photo");
   img.src = r.photo;
   img.alt = t.photoAlt;
@@ -309,14 +311,23 @@ function renderReveal(lang) {
     )}</span><span class="fact-value">${escapeHtml(f.value)}</span>`;
     facts.appendChild(div);
   });
+  const structure = $("#reveal-structure");
+  if (structure) {
+    structure.innerHTML = "";
+    (t.structure || []).forEach((s) => {
+      const row = document.createElement("div");
+      row.className = "structure-row";
+      row.innerHTML = `<span class="structure-label">${escapeHtml(
+        s.label
+      )}</span><span class="structure-value">${escapeHtml(s.value)}</span>`;
+      structure.appendChild(row);
+    });
+  }
   const names = $("#reveal-names");
   names.innerHTML = "";
   (t.names || []).forEach((n) => {
     const li = document.createElement("li");
-    const role = n.role
-      ? `<span class="name-role">${escapeHtml(n.role)}</span>`
-      : "";
-    li.innerHTML = `${role}<span class="name-word">${escapeHtml(
+    li.innerHTML = `<span class="name-word">${escapeHtml(
       n.name
     )}</span> <span class="name-meaning">${escapeHtml(n.meaning)}</span>`;
     names.appendChild(li);

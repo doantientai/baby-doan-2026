@@ -177,6 +177,8 @@ const CONFIG = {
     available: "À offrir",
     takenPrefix: "Déjà pris",
     reserveBtn: "Je m'en occupe",
+    reserveBtnMulti: "Je participe",
+    multiPrefix: "Déjà :",
     namePrompt: "Ton prénom (pour réserver ce cadeau) :",
     takenByOther: "Oups, ce cadeau vient d'être réservé par",
   },
@@ -414,22 +416,46 @@ function renderGiftItems(items) {
       lastCategory = category;
     }
     const taken = (it.takenBy || "").trim();
-    const li = document.createElement("li");
-    li.className = "gift-item" + (taken ? " taken" : "");
     const details = it.details
       ? `<span class="gift-details">${escapeHtml(it.details)}</span>`
       : "";
-    const right = taken
-      ? `<span class="gift-badge taken">✅ ${escapeHtml(
-          cfg.takenPrefix
-        )} · ${escapeHtml(taken)}</span>`
-      : `<button class="gift-reserve" data-row="${it.row}">${escapeHtml(
-          cfg.reserveBtn
-        )}</button>`;
-    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
-      it.item
-    )}</span>${details}</span>${right}`;
-    if (!taken) {
+    const li = document.createElement("li");
+    let hasButton = false;
+
+    if (it.multi) {
+      // Shareable item: list contributors, keep a "Je participe" button.
+      const contributors = taken
+        ? `<span class="gift-contributors">👥 ${escapeHtml(
+            cfg.multiPrefix
+          )} ${escapeHtml(taken)}</span>`
+        : "";
+      li.className = "gift-item";
+      li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
+        it.item
+      )}</span>${details}${contributors}</span><button class="gift-reserve" data-row="${
+        it.row
+      }">${escapeHtml(cfg.reserveBtnMulti)}</button>`;
+      hasButton = true;
+    } else if (taken) {
+      // Single item already reserved.
+      li.className = "gift-item taken";
+      li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
+        it.item
+      )}</span>${details}</span><span class="gift-badge taken">✅ ${escapeHtml(
+        cfg.takenPrefix
+      )} · ${escapeHtml(taken)}</span>`;
+    } else {
+      // Single item still available.
+      li.className = "gift-item";
+      li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
+        it.item
+      )}</span>${details}</span><button class="gift-reserve" data-row="${
+        it.row
+      }">${escapeHtml(cfg.reserveBtn)}</button>`;
+      hasButton = true;
+    }
+
+    if (hasButton) {
       li.querySelector(".gift-reserve").addEventListener("click", (e) =>
         reserveGift(it.row, e.currentTarget)
       );

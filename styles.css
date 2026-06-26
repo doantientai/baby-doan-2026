@@ -550,6 +550,14 @@ button:disabled {
   color: var(--soft);
 }
 
+.gift-contributors {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--good);
+  margin-top: 0.2rem;
+  overflow-wrap: anywhere;
+}
+
 .gift-badge.taken {
   font-size: 0.8rem;
   font-weight: 600;

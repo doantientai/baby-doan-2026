@@ -3,12 +3,14 @@
  *
  * The Sheet's first tab should have a header row, then one item per row:
  *
- *   | Catégorie         | Article     | Détails | Pris par |
- *   | Pour le quotidien | Vêtements   | …       |          |
- *   | Éveil & jouets    | Mobile      | …       |          |
+ *   | Catégorie         | Article   | Détails | Pris par | Plusieurs |
+ *   | Pour le quotidien | Vêtements | …       |          | oui       |
+ *   | Pour le quotidien | Poussette | …       |          |           |
  *
  * Column A = category, B = item name, C = optional details,
- * D = who reserved it (leave D empty = still available).
+ * D = who reserved it (leave D empty = still available),
+ * E = "Plusieurs": put any text (e.g. "oui") for items several people can
+ *     share — those collect a list of names instead of locking to one person.
  *
  * This script is bound to its own Sheet (created via Extensions → Apps Script),
  * so it just reads that Sheet's first tab — no sheet ID needed.
@@ -36,6 +38,7 @@ function getItems_() {
       item: String(item),
       details: String(values[i][2] || ""),
       takenBy: String(values[i][3] || ""),
+      multi: String(values[i][4] || "").trim() !== "",
     });
   }
   return items;
@@ -65,8 +68,23 @@ function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(5000);
   try {
-    const cell = sheet_().getRange(row, 4); // column D = "Pris par"
+    const sh = sheet_();
+    const cell = sh.getRange(row, 4); // column D = "Pris par"
     const current = String(cell.getValue() || "").trim();
+    const isMulti = String(sh.getRange(row, 5).getValue() || "").trim() !== "";
+    if (isMulti) {
+      // Shareable item: append the name to the list (no duplicates).
+      const names = current
+        ? current.split(",").map((s) => s.trim()).filter(Boolean)
+        : [];
+      if (!names.some((n) => n.toLowerCase() === name.toLowerCase())) {
+        names.push(name);
+      }
+      const joined = names.join(", ");
+      cell.setValue(joined);
+      return json_({ ok: true, takenBy: joined, multi: true });
+    }
+    // Single item: first come, first served.
     if (current) return json_({ ok: false, takenBy: current });
     cell.setValue(name);
     return json_({ ok: true, takenBy: name });

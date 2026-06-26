@@ -8,15 +8,18 @@ Apps Script. No server to host, nothing secret in the website.
 1. New Google Sheet.
 2. First row = headers, then one item per row:
 
-   | Catégorie         | Article     | Détails | Pris par |
-   | ----------------- | ----------- | ------- | -------- |
-   | Pour le quotidien | Vêtements   |         |          |
-   | Éveil & jouets    | Mobile      | x1      |          |
+   | Catégorie         | Article   | Détails | Pris par | Plusieurs |
+   | ----------------- | --------- | ------- | -------- | --------- |
+   | Pour le quotidien | Vêtements |         |          | oui       |
+   | Pour le quotidien | Poussette |         |          |           |
 
    - **Catégorie** (col A): section header (items are grouped by it)
    - **Article** (col B): what you need
    - **Détails** (col C): optional (size, quantity, link…)
    - **Pris par** (col D): leave empty — filled in when someone reserves
+   - **Plusieurs** (col E): put any text (e.g. "oui") for items several people
+     can share — those collect a list of names and show "Je participe" instead
+     of locking to one person. Leave empty for one-person items.
 
 ## 2. Add the script
 

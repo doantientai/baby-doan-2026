@@ -177,7 +177,7 @@ const CONFIG = {
     offerBtn: "🎁",
     offerLabel: "Offrir ce cadeau",
     chooseSolo: "Je m'en occupe",
-    chooseJoin: "Je participe (à plusieurs)",
+    chooseJoin: "Je participe",
     cancelChoice: "Annuler",
     reserveBtnMulti: "Je participe",
     multiPrefix: "Déjà :",

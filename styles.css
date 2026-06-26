@@ -590,6 +590,10 @@ button:disabled {
   margin-top: 0.75rem;
 }
 
+.gift-add-form.hidden {
+  display: none;
+}
+
 .gift-add-form input,
 .gift-add-form select {
   width: 100%;

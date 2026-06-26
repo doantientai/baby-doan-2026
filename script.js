@@ -499,15 +499,16 @@ function renderGiftItems(items) {
 
   order.forEach((cat) => {
     const group = document.createElement("div");
-    group.className = "gift-group";
+    group.className = "gift-group collapsed"; // start folded
 
+    const count = byCategory[cat].length;
     const header = document.createElement("button");
     header.type = "button";
     header.className = "gift-category";
-    header.setAttribute("aria-expanded", "true");
-    header.innerHTML = `<span class="gift-caret" aria-hidden="true">▾</span><span>${escapeHtml(
+    header.setAttribute("aria-expanded", "false");
+    header.innerHTML = `<span class="gift-caret" aria-hidden="true">▾</span><span class="gift-cat-name">${escapeHtml(
       cat
-    )}</span>`;
+    )}</span><span class="gift-count">(${count})</span>`;
 
     const ul = document.createElement("ul");
     ul.className = "gift-group-items";

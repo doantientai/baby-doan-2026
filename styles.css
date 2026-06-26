@@ -530,6 +530,15 @@ button:disabled {
   transform: none;
 }
 
+.gift-cat-name {
+  flex: 1;
+}
+
+.gift-count {
+  font-weight: 600;
+  color: var(--soft);
+}
+
 .gift-caret {
   display: inline-block;
   transition: transform 0.2s ease;

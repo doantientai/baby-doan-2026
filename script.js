@@ -485,63 +485,92 @@ function renderGiftItems(items) {
     list.innerHTML = `<p class="gift-status">${escapeHtml(cfg.empty)}</p>`;
     return;
   }
-  let lastCategory = null;
+  // Group by category, preserving order of first appearance.
+  const order = [];
+  const byCategory = {};
   items.forEach((it) => {
-    const category = (it.category || "").trim();
-    if (category && category !== lastCategory) {
-      const head = document.createElement("li");
-      head.className = "gift-category";
-      head.textContent = category;
-      list.appendChild(head);
-      lastCategory = category;
+    const cat = (it.category || "").trim() || "—";
+    if (!byCategory[cat]) {
+      byCategory[cat] = [];
+      order.push(cat);
     }
-    const taken = (it.takenBy || "").trim();
-    const details = it.details
-      ? `<span class="gift-details">${escapeHtml(it.details)}</span>`
-      : "";
-    const li = document.createElement("li");
-    let hasButton = false;
-
-    if (it.multi) {
-      // Shareable item: list contributors, keep a "Je participe" button.
-      const contributors = taken
-        ? `<span class="gift-contributors">👥 ${escapeHtml(
-            cfg.multiPrefix
-          )} ${escapeHtml(taken)}</span>`
-        : "";
-      li.className = "gift-item";
-      li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
-        it.item
-      )}</span>${details}${contributors}</span><button class="gift-reserve" data-row="${
-        it.row
-      }">${escapeHtml(cfg.reserveBtnMulti)}</button>`;
-      hasButton = true;
-    } else if (taken) {
-      // Single item already reserved.
-      li.className = "gift-item taken";
-      li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
-        it.item
-      )}</span>${details}</span><span class="gift-badge taken">✅ ${escapeHtml(
-        cfg.takenPrefix
-      )} · ${escapeHtml(taken)}</span>`;
-    } else {
-      // Single item still available.
-      li.className = "gift-item";
-      li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
-        it.item
-      )}</span>${details}</span><button class="gift-reserve" data-row="${
-        it.row
-      }">${escapeHtml(cfg.reserveBtn)}</button>`;
-      hasButton = true;
-    }
-
-    if (hasButton) {
-      li.querySelector(".gift-reserve").addEventListener("click", (e) =>
-        reserveGift(it.row, e.currentTarget)
-      );
-    }
-    list.appendChild(li);
+    byCategory[cat].push(it);
   });
+
+  order.forEach((cat) => {
+    const group = document.createElement("div");
+    group.className = "gift-group";
+
+    const header = document.createElement("button");
+    header.type = "button";
+    header.className = "gift-category";
+    header.setAttribute("aria-expanded", "true");
+    header.innerHTML = `<span class="gift-caret" aria-hidden="true">▾</span><span>${escapeHtml(
+      cat
+    )}</span>`;
+
+    const ul = document.createElement("ul");
+    ul.className = "gift-group-items";
+    byCategory[cat].forEach((it) => ul.appendChild(buildGiftItem(it, cfg)));
+
+    header.addEventListener("click", () => {
+      const collapsed = group.classList.toggle("collapsed");
+      header.setAttribute("aria-expanded", String(!collapsed));
+    });
+
+    group.appendChild(header);
+    group.appendChild(ul);
+    list.appendChild(group);
+  });
+}
+
+function buildGiftItem(it, cfg) {
+  const taken = (it.takenBy || "").trim();
+  const details = it.details
+    ? `<span class="gift-details">${escapeHtml(it.details)}</span>`
+    : "";
+  const li = document.createElement("li");
+  let hasButton = false;
+
+  if (it.multi) {
+    // Shareable item: list contributors, keep a "Je participe" button.
+    const contributors = taken
+      ? `<span class="gift-contributors">👥 ${escapeHtml(
+          cfg.multiPrefix
+        )} ${escapeHtml(taken)}</span>`
+      : "";
+    li.className = "gift-item";
+    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
+      it.item
+    )}</span>${details}${contributors}</span><button class="gift-reserve" data-row="${
+      it.row
+    }">${escapeHtml(cfg.reserveBtnMulti)}</button>`;
+    hasButton = true;
+  } else if (taken) {
+    // Single item already reserved.
+    li.className = "gift-item taken";
+    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
+      it.item
+    )}</span>${details}</span><span class="gift-badge taken">✅ ${escapeHtml(
+      cfg.takenPrefix
+    )} · ${escapeHtml(taken)}</span>`;
+  } else {
+    // Single item still available.
+    li.className = "gift-item";
+    li.innerHTML = `<span class="gift-name"><span class="gift-word">${escapeHtml(
+      it.item
+    )}</span>${details}</span><button class="gift-reserve" data-row="${
+      it.row
+    }">${escapeHtml(cfg.reserveBtn)}</button>`;
+    hasButton = true;
+  }
+
+  if (hasButton) {
+    li.querySelector(".gift-reserve").addEventListener("click", (e) =>
+      reserveGift(it.row, e.currentTarget)
+    );
+  }
+  return li;
 }
 
 async function reserveGift(row, btn) {

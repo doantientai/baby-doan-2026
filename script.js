@@ -71,8 +71,9 @@ const CONFIG = {
         visit: [
           {
             text:
-              "Vaccins à jour conseillés (coqueluche, grippe…) avant de " +
-              "rencontrer le bébé —",
+              "Vaccins fortement recommandés (mais non obligatoires), surtout " +
+              "pour les personnes en contact long ou fréquent avec le bébé " +
+              "(coqueluche, grippe…) —",
             href: "https://vaccination-info-service.fr",
             hrefLabel: "vaccination-info-service.fr",
           },
@@ -128,8 +129,9 @@ const CONFIG = {
         visit: [
           {
             text:
-              "Up-to-date vaccines recommended (whooping cough, flu…) before " +
-              "meeting the baby —",
+              "Vaccines strongly recommended (not mandatory), especially for " +
+              "those in long or frequent contact with the baby (whooping " +
+              "cough, flu…) —",
             href: "https://vaccination-info-service.fr",
             hrefLabel: "French health site",
           },
@@ -184,7 +186,8 @@ const CONFIG = {
         visit: [
           {
             text:
-              "Nên tiêm phòng đầy đủ (ho gà, cúm…) trước khi gặp bé —",
+              "Rất khuyến khích tiêm phòng (không bắt buộc), nhất là với người " +
+              "tiếp xúc lâu hoặc thường xuyên với bé (ho gà, cúm…) —",
             href: "https://vaccination-info-service.fr",
             hrefLabel: "trang y tế Pháp",
           },

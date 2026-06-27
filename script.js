@@ -68,6 +68,17 @@ const CONFIG = {
         note:
           "Et un joli clin d'œil : Anna Tâm → An Tâm (安心), « un cœur " +
           "paisible ». 💛",
+        visit: [
+          {
+            text:
+              "Vaccins à jour conseillés (coqueluche, grippe…) avant de " +
+              "rencontrer le bébé —",
+            href: "https://vaccination-info-service.fr",
+            hrefLabel: "vaccination-info-service.fr",
+          },
+          { text: "Pas de bisous sur le visage du bébé 😘🚫" },
+          { text: "On se lave les mains au savon avant les câlins 🧼" },
+        ],
       },
       en: {
         fullName: "Anna Tâm Sophie Xuân Doan",
@@ -114,6 +125,17 @@ const CONFIG = {
         ],
         note:
           'A lovely touch: Anna Tâm → An Tâm (安心), "a peaceful heart". 💛',
+        visit: [
+          {
+            text:
+              "Up-to-date vaccines recommended (whooping cough, flu…) before " +
+              "meeting the baby —",
+            href: "https://vaccination-info-service.fr",
+            hrefLabel: "French health site",
+          },
+          { text: "No kissing on the baby's face 😘🚫" },
+          { text: "Wash your hands with soap before cuddles 🧼" },
+        ],
       },
       vn: {
         fullName: "Anna Tâm Sophie Xuân Đoàn",
@@ -159,6 +181,16 @@ const CONFIG = {
         ],
         note:
           'Một điều thú vị: Anna Tâm → An Tâm (安心), "tâm hồn bình an". 💛',
+        visit: [
+          {
+            text:
+              "Nên tiêm phòng đầy đủ (ho gà, cúm…) trước khi gặp bé —",
+            href: "https://vaccination-info-service.fr",
+            hrefLabel: "trang y tế Pháp",
+          },
+          { text: "Không hôn lên mặt bé 😘🚫" },
+          { text: "Rửa tay bằng xà phòng trước khi bế bé 🧼" },
+        ],
       },
     },
   },
@@ -376,6 +408,23 @@ function renderReveal(lang) {
     note.style.display = "";
   } else {
     note.style.display = "none";
+  }
+  const visit = $("#reveal-visit");
+  if (visit) {
+    visit.innerHTML = "";
+    (t.visit || []).forEach((v) => {
+      const li = document.createElement("li");
+      let html = escapeHtml(v.text);
+      if (v.href) {
+        html += ` <a href="${escapeHtml(
+          v.href
+        )}" target="_blank" rel="noopener">${escapeHtml(
+          v.hrefLabel || v.href
+        )}</a>`;
+      }
+      li.innerHTML = html;
+      visit.appendChild(li);
+    });
   }
   setupRevealCollapsibles();
 }
